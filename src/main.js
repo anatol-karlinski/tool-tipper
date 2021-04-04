@@ -8,6 +8,9 @@ Vue.use(VTooltip, {
   defaultTrigger: "hover",
   popover: {
     defaultTrigger: "hover",
+    defaultPlacement: "auto",
+    defaultOffset: 20,
+    defaultAutoHide: false,
   },
 });
 

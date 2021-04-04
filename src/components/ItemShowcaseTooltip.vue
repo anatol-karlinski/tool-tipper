@@ -74,6 +74,14 @@
         <div class="item-corrupted" v-if="itemIsCorrupted">Corrupted</div>
         <!-- Mirrored -->
         <div class="item-mirrored" v-if="itemIsMirrored">Mirrored</div>
+        <!-- Image -->
+        <div class="item-separator" v-if="imageUrl"></div>
+        <img
+          class="item-image"
+          :src="imageUrl"
+          v-show="imageUrl"
+          :width="imageSize"
+        />
       </div>
     </div>
   </div>
@@ -84,6 +92,8 @@ export default {
   name: "ItemShowcaseTooltip",
   props: {
     item: { type: Object, default: () => {} },
+    imageUrl: { type: String, default: "" },
+    imageSize: { type: Number, default: 50 },
   },
   methods: {
     getModifierClasses(modifier) {
@@ -269,6 +279,12 @@ export default {
   background-color: black;
   line-height: 24px;
   min-width: 360px;
+  border: 2px solid white;
+
+  & .item-image {
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
 }
 
 .item-header {
@@ -279,6 +295,7 @@ export default {
 
   &.item-header-single {
     height: 32px;
+    background-image: url(../assets/Item-ui-header-single.png);
 
     & .item-header-left-panel {
       background-image: url(../assets/Item-ui-header-single.png);
@@ -293,6 +310,8 @@ export default {
     & .item-header-right-panel {
       background-image: url(../assets/Item-ui-header-single.png);
       width: 32px;
+      background-position-x: -2px;
+
       &.item-influenced img {
         margin-top: 2px;
         position: relative;
@@ -301,7 +320,6 @@ export default {
     }
 
     & .item-header-center {
-      background-image: url(../assets/Item-ui-header-single.png);
       width: 100%;
       line-height: 23px;
       padding-left: 10px;
@@ -315,6 +333,7 @@ export default {
 
   &.item-header-double {
     height: 52px;
+    background-image: url(../assets/Item-ui-header-double.png);
 
     & .item-header-left-panel {
       background-image: url(../assets/Item-ui-header-double.png);
@@ -324,11 +343,10 @@ export default {
     & .item-header-right-panel {
       background-image: url(../assets/Item-ui-header-double.png);
       width: 40px;
-      background-position-x: -9px;
+      background-position-x: -10px;
     }
 
     & .item-header-center {
-      background-image: url(../assets/Item-ui-header-double.png);
       width: 100%;
       line-height: 23px;
       & div:nth-child(1) {
@@ -388,10 +406,11 @@ export default {
 
 .unique-item {
   &.item-wrapper {
-    border: 1px solid var(--poe-color-unique);
+    border-color: var(--poe-color-unique);
   }
   & .item-header {
     color: var(--poe-color-unique);
+    background-position-y: 106px;
   }
   & .item-separator {
     background-position-y: -6px;
@@ -402,17 +421,15 @@ export default {
   & .item-header-right-panel {
     background-position-y: 52px;
   }
-  & .item-header-center {
-    background-position-y: 106px;
-  }
 }
 
 .rare-item {
   &.item-wrapper {
-    border: 1px solid var(--poe-color-rare);
+    border-color: var(--poe-color-rare);
   }
   & .item-header {
     color: var(--poe-color-rare);
+    background-position-y: -55px;
   }
   & .item-separator {
     background-position-y: -4px;
@@ -423,17 +440,15 @@ export default {
   & .item-header-right-panel {
     background-position-y: -109px;
   }
-  & .item-header-center {
-    background-position-y: -55px;
-  }
 }
 
 .magic-item {
   &.item-wrapper {
-    border: 1px solid var(--poe-color-magic);
+    border-color: var(--poe-color-magic);
   }
   & .item-header {
     color: var(--poe-color-magic);
+    background-position-y: 474px;
   }
   & .item-separator {
     background-position-y: -2px;
@@ -444,17 +459,15 @@ export default {
   & .item-header-right-panel {
     background-position-y: 440px;
   }
-  & .item-header-center {
-    background-position-y: 474px;
-  }
 }
 
 .normal-item {
   &.item-wrapper {
-    border: 1px solid var(--poe-color-normal);
+    border-color: var(--poe-color-normal);
   }
   & .item-header {
     color: var(--poe-color-normal);
+    background-position-y: 578px;
   }
   & .item-separator {
     background-position-y: -8px;
@@ -465,17 +478,15 @@ export default {
   & .item-header-right-panel {
     background-position-y: 544px;
   }
-  & .item-header-center {
-    background-position-y: 578px;
-  }
 }
 
 .gem-item {
   &.item-wrapper {
-    border: 1px solid var(--poe-color-gem);
+    border-color: var(--poe-color-gem);
   }
   & .item-header {
     color: var(--poe-color-gem);
+    background-position-y: 883px;
   }
   & .item-separator {
     background-position-y: -10px;
@@ -485,9 +496,6 @@ export default {
   }
   & .item-header-right-panel {
     background-position-y: 849px;
-  }
-  & .item-header-center {
-    background-position-y: 883px;
   }
 }
 
