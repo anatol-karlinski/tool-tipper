@@ -79,7 +79,7 @@ export default {
       if (size === "auto") {
         switch (this.item.type) {
           case "Equipment":
-            return 120;
+            return 100;
           case "Flask":
             return 50;
           case "Gem":
@@ -97,7 +97,7 @@ export default {
           case "lg":
             return 80;
           case "xlg":
-            return 120;
+            return 100;
         }
       }
     },
