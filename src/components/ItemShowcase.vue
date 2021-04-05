@@ -37,7 +37,6 @@
 <script>
 import ItemShowcaseTooltip from "./ItemShowcaseTooltip.vue";
 import processItemData from "./core-processor";
-import axios from "axios";
 
 const defaultOptions = {
   itemData: "",
@@ -65,7 +64,6 @@ export default {
       options: { ...defaultOptions },
       item: {},
       showItem: false,
-      imageAvalible: false,
     };
   },
   mounted() {
@@ -126,10 +124,10 @@ export default {
       return classes;
     },
     showImage() {
-      return this.options.showLinkAsIcon && this.imageAvalible;
+      return this.options.showLinkAsIcon;
     },
     showTooltipImage() {
-      return this.imageAvalible && this.options.showIconInTooltip;
+      return this.options.showIconInTooltip;
     },
     linkImageSize() {
       return this.getImageSize(this.options.iconSize);
@@ -147,13 +145,6 @@ export default {
           this.showItem = true;
         } catch {
           this.showItem = false;
-        }
-
-        try {
-          await axios.head(options.imageUrl);
-          this.imageAvalible = true;
-        } catch {
-          this.imageAvalible = false;
         }
       },
     },
