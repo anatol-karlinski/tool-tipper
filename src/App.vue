@@ -8,22 +8,37 @@
         justify-content: center;
       "
     >
-      <item-showcase id="test0" />
-      <item-showcase id="test1" />
-      <item-showcase id="test2" />
-      <item-showcase id="test3" />
-      <item-showcase id="test4" />
+      <poe-item-showcase id="test0" />
+      <poe-item-showcase id="test1" />
+      <poe-item-showcase id="test2" />
+      <poe-item-showcase id="test3" />
+      <poe-item-showcase id="test4" />
+    </div>
+    <div
+      style="height: 2px; width: 100%; margin: 20px; border-top: 1px solid grey"
+    />
+    <div
+      style="
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <le-item-showcase id="test5" />
     </div>
   </div>
 </template>
 
 <script>
-import ItemShowcase from "./components/ItemShowcase.vue";
+import PoeItemShowcase from "./components/path-of-exile/poe-item-showcase.vue";
+import LeItemShowcase from "./components/last-epoch/le-item-showcase.vue";
 
 export default {
   name: "App",
   components: {
-    ItemShowcase,
+    PoeItemShowcase,
+    LeItemShowcase,
   },
   mounted() {
     window.itemShowcases.test0.applyOptions({
@@ -172,6 +187,29 @@ export default {
           Adds 46 to 57 Chaos Damage to Hits against Cursed Enemies
 `,
     });
+    window.itemShowcases.test5.applyOptions({
+      showIconInTooltip: true,
+      imageUrl: `https://lastepoch.tunklab.com/image/Call_of_the_Tundra.png`,
+      itemData: `
+          Rarity: Unique
+          Call of the Tundra
+          Helmet
+          Unique Gladiator Helmet
+          --------
+          +130 Armor
+          --------
+          Requirements:
+          Level: 74
+          --------
+          +1 to Level of Warcry
+          Warcry is Converted to Cold
+          Converts stun to freeze, physical damage to cold damage, and bleed to frostbite.
+          Warcry no longer knocks enemies back
+          +100 Health
+          +18 Health Regen
+          18 Health Gain on Freeze
+`,
+    });
   },
 };
 </script>
@@ -179,8 +217,12 @@ export default {
 <style lang="scss">
 body {
   background-color: black;
+  overflow: hidden;
 }
-.item-showcase-wrapper {
+.poe-item-showcase {
+  margin-top: auto;
+}
+.poe-item-showcase-wrapper {
   margin: 20px;
 }
 </style>

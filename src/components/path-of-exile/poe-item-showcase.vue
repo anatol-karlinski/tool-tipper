@@ -1,8 +1,12 @@
 <template>
-  <div class="item-showcase">
-    <slot name="item" class="item-showcase-data-slot"></slot>
-    <div class="item-showcase-wrapper" v-if="options.displayAsTooltip">
-      <v-popover trigger="hover" placement="auto" :offset="20">
+  <div class="poe-item-showcase">
+    <div class="poe-item-showcase-wrapper" v-if="options.displayAsTooltip">
+      <v-popover
+        trigger="hover"
+        placement="auto"
+        :offset="20"
+        :popoverClass="[`poe-item-showcase-popover`]"
+      >
         <a v-if="!showImage" :class="linkClassesComputed">{{
           linkTextComputed
         }}</a>
@@ -12,7 +16,7 @@
           {{ item.name }}
         </span>
         <template slot="popover">
-          <item-showcase-tooltip
+          <poe-item-showcase-tooltip
             v-if="showItem"
             :item="item"
             :imageUrl="options.imageUrl"
@@ -22,8 +26,8 @@
         </template>
       </v-popover>
     </div>
-    <div class="item-showcase-wrapper" v-else>
-      <item-showcase-tooltip
+    <div class="poe-item-showcase-wrapper" v-else>
+      <poe-item-showcase-tooltip
         v-if="showItem"
         :item="item"
         :imageUrl="options.imageUrl"
@@ -35,41 +39,20 @@
 </template>
 
 <script>
-import ItemShowcaseTooltip from "./ItemShowcaseTooltip.vue";
-import processItemData from "./core-processor";
-
-const defaultOptions = {
-  itemData: "",
-  imageUrl: "",
-  showLinkAsIcon: false,
-  iconSize: "auto",
-  linkClasses: "",
-  linkText: "",
-  displayAsTooltip: false,
-  showIconInTooltip: false,
-  iconInTooltipSize: "auto",
-  showIconLabel: true,
-};
+import PoeItemShowcaseTooltip from "./poe-item-showcase-tooltip.vue";
+import processItemData from "../../item-processors/poe-item-processor";
+import itemShowacseMixin from "./../shared/item-showcase.mixin";
 
 export default {
-  name: "ItemShowcase",
+  name: "PoeItemShowcase",
   components: {
-    ItemShowcaseTooltip,
+    PoeItemShowcaseTooltip,
   },
-  props: {
-    id: { type: String, required: true },
-  },
-  data: function () {
-    return {
-      options: { ...defaultOptions },
-      item: {},
-      showItem: false,
-    };
-  },
-  mounted() {
-    this.registerShowcase();
-  },
+  mixins: [itemShowacseMixin],
   methods: {
+    processItemData(rawDescription) {
+      return processItemData(rawDescription);
+    },
     getImageSize(size) {
       if (size === "auto") {
         switch (this.item.type) {
@@ -95,19 +78,6 @@ export default {
             return 100;
         }
       }
-    },
-    applyOptions(options) {
-      this.options = {
-        ...this.options,
-        ...options,
-      };
-    },
-    registerShowcase() {
-      window.itemShowcases = window.itemShowcases || {};
-      window.itemShowcases[this.id] = {
-        instance: this,
-        applyOptions: this.applyOptions,
-      };
     },
   },
   computed: {
@@ -136,30 +106,39 @@ export default {
       return this.getImageSize(this.options.iconInTooltipSize);
     },
   },
-  watch: {
-    options: {
-      immediate: false,
-      handler: async function (options) {
-        try {
-          this.item = processItemData(options.itemData);
-          this.showItem = true;
-        } catch {
-          this.showItem = false;
-        }
-      },
-    },
-  },
 };
 </script>
 
 <style lang="scss">
+.item-link-unique {
+  color: var(--poe-color-unique);
+}
+.item-link-rare {
+  color: var(--poe-color-rare);
+}
+.item-link-magic {
+  color: var(--poe-color-magic);
+}
+.item-link-normal {
+  color: var(--poe-color-normal);
+}
+.item-link-gem {
+  color: var(--poe-color-gem);
+}
+.poe-item-showcase-wrapper {
+  display: flex;
+}
 @font-face {
   font-family: "Fontin-SmallCaps";
   src: local("Fontin-SmallCaps"),
-    url(../assets/Fontin-SmallCaps.ttf) format("truetype");
+    url(../../assets/poe/Fontin-SmallCaps.ttf) format("truetype");
 }
-.item-showcase,
-.vue-popover-theme {
+.poe-item-showcase-popover {
+  background-color: black;
+  box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
+}
+.poe-item-showcase,
+.poe-item-showcase-popover {
   display: inline-block;
   text-align: center;
   font-family: "Fontin-SmallCaps", Verdana, Arial, Helvetica, sans-serif;
@@ -168,7 +147,6 @@ export default {
   font-style: normal;
   font-variant-ligatures: none;
   color: rgb(127, 127, 127);
-  background-color: black;
   line-height: 24px;
   --poe-color-default: rgb(127, 127, 127);
   --poe-color-valuedefault: rgb(255, 255, 255);
@@ -243,26 +221,5 @@ export default {
   --poe-color-craftinglife: rgb(201, 110, 110);
   --poe-color-craftingdefences: rgb(168, 143, 103);
   --poe-color-craftingattack: rgb(218, 129, 77);
-}
-.item-link-unique {
-  color: var(--poe-color-unique);
-}
-.item-link-rare {
-  color: var(--poe-color-rare);
-}
-.item-link-magic {
-  color: var(--poe-color-magic);
-}
-.item-link-normal {
-  color: var(--poe-color-normal);
-}
-.item-link-gem {
-  color: var(--poe-color-gem);
-}
-.item-showcase-data-slot {
-  display: none;
-}
-.item-showcase-wrapper {
-  display: flex;
 }
 </style>

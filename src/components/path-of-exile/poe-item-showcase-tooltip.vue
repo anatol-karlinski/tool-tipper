@@ -92,7 +92,7 @@
 
 <script>
 export default {
-  name: "ItemShowcaseTooltip",
+  name: "PoeItemShowcaseTooltip",
   props: {
     item: { type: Object, default: () => {} },
     imageUrl: { type: String, default: "" },
@@ -268,8 +268,8 @@ export default {
 </script>
 
 <style lang="scss">
-.item-showcase,
-.vue-popover-theme {
+.poe-item-showcase,
+.poe-item-showcase-popover {
   .item-wrapper {
     min-width: 360px;
     border: 2px solid white;
@@ -288,10 +288,10 @@ export default {
 
     &.item-header-single {
       height: 32px;
-      background-image: url(../assets/Item-ui-header-single.png);
+      background-image: url(../../assets/poe/Item-ui-header-single.png);
 
       & .item-header-left-panel {
-        background-image: url(../assets/Item-ui-header-single.png);
+        background-image: url(../../assets/poe/Item-ui-header-single.png);
         width: 32px;
         &.item-influenced img {
           margin-top: 2px;
@@ -301,7 +301,7 @@ export default {
       }
 
       & .item-header-right-panel {
-        background-image: url(../assets/Item-ui-header-single.png);
+        background-image: url(../../assets/poe/Item-ui-header-single.png);
         width: 32px;
         background-position-x: -1px;
 
@@ -326,15 +326,15 @@ export default {
 
     &.item-header-double {
       height: 52px;
-      background-image: url(../assets/Item-ui-header-double.png);
+      background-image: url(../../assets/poe/Item-ui-header-double.png);
 
       & .item-header-left-panel {
-        background-image: url(../assets/Item-ui-header-double.png);
+        background-image: url(../../assets/poe/Item-ui-header-double.png);
         width: 40px;
       }
 
       & .item-header-right-panel {
-        background-image: url(../assets/Item-ui-header-double.png);
+        background-image: url(../../assets/poe/Item-ui-header-double.png);
         width: 40px;
         background-position-x: -8px;
       }
@@ -389,7 +389,7 @@ export default {
     background-position-x: center;
     margin-top: 4px;
     margin-bottom: 4px;
-    background-image: url(./../assets/Item-ui-separators.png);
+    background-image: url(../../assets/poe/Item-ui-separators.png);
   }
 
   .item-stats {
@@ -493,25 +493,25 @@ export default {
   }
 
   .item-influenced-elder img {
-    content: url(../assets/influence-icons/Elder.png);
+    content: url(../../assets/poe/influence-icons/Elder.png);
   }
   .item-influenced-shaper img {
-    content: url(../assets/influence-icons/Shaper.png);
+    content: url(../../assets/poe/influence-icons/Shaper.png);
   }
   .item-influenced-hunter img {
-    content: url(../assets/influence-icons/Hunter.png);
+    content: url(../../assets/poe/influence-icons/Hunter.png);
   }
   .item-influenced-crusader img {
-    content: url(../assets/influence-icons/Crusader.png);
+    content: url(../../assets/poe/influence-icons/Crusader.png);
   }
   .item-influenced-redeemer img {
-    content: url(../assets/influence-icons/Redeemer.png);
+    content: url(../../assets/poe/influence-icons/Redeemer.png);
   }
   .item-influenced-warlord img {
-    content: url(../assets/influence-icons/Warlord.png);
+    content: url(../../assets/poe/influence-icons/Warlord.png);
   }
   .item-influenced-replica img {
-    content: url(../assets/influence-icons/Replica.png);
+    content: url(../../assets/poe/influence-icons/Replica.png);
   }
 }
 </style>
