@@ -7,6 +7,10 @@
           linkTextComputed
         }}</a>
         <img v-else :width="linkImageSize" :src="options.imageUrl" />
+        <br />
+        <span v-show="options.showIconLabel && showImage && item.name">
+          {{ item.name }}
+        </span>
         <template slot="popover">
           <item-showcase-tooltip
             v-if="showItem"
@@ -45,6 +49,7 @@ const defaultOptions = {
   displayAsTooltip: false,
   showIconInTooltip: false,
   iconInTooltipSize: "auto",
+  showIconLabel: true,
 };
 
 export default {
@@ -61,14 +66,6 @@ export default {
       item: {},
       showItem: false,
       imageAvalible: false,
-      popperOptions: {
-        defaultTrigger: "hover",
-        popover: {
-          defaultTrigger: "hover",
-          defaultPlacement: "auto",
-          defaultOffset: 20,
-        },
-      },
     };
   },
   mounted() {
