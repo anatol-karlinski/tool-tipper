@@ -1,28 +1,32 @@
 <template>
-  <div class="item-showcase-wrapper" v-if="displayAsTooltip">
-    <slot class="item-showcase-data-slot"></slot>
-    <v-popover>
-      <a v-if="!showImage" :class="linkClassesComputed">{{
-        linkTextComputed
-      }}</a>
-      <img v-else :width="linkImageSize" :src="imageUrl" />
-      <template slot="popover">
-        <item-showcase-tooltip
-          v-if="showItem"
-          :item="item"
-          :imageUrl="imageUrl"
-          :imageSize="tooltipImageSize"
-        />
-      </template>
-    </v-popover>
-  </div>
-  <div class="item-showcase-wrapper" v-else>
-    <item-showcase-tooltip
-      v-if="showItem"
-      :item="item"
-      :imageUrl="imageUrl"
-      :imageSize="tooltipImageSize"
-    />
+  <div class="item-showcase">
+    <slot name="item" class="item-showcase-data-slot"></slot>
+    <div class="item-showcase-wrapper" v-if="options.displayAsTooltip">
+      <v-popover trigger="hover" placement="auto" :offset="20">
+        <a v-if="!showImage" :class="linkClassesComputed">{{
+          linkTextComputed
+        }}</a>
+        <img v-else :width="linkImageSize" :src="options.imageUrl" />
+        <template slot="popover">
+          <item-showcase-tooltip
+            v-if="showItem"
+            :item="item"
+            :imageUrl="options.imageUrl"
+            :showImage="showTooltipImage"
+            :imageSize="tooltipImageSize"
+          />
+        </template>
+      </v-popover>
+    </div>
+    <div class="item-showcase-wrapper" v-else>
+      <item-showcase-tooltip
+        v-if="showItem"
+        :item="item"
+        :imageUrl="options.imageUrl"
+        :showImage="showTooltipImage"
+        :imageSize="tooltipImageSize"
+      />
+    </div>
   </div>
 </template>
 
@@ -31,36 +35,44 @@ import ItemShowcaseTooltip from "./ItemShowcaseTooltip.vue";
 import processItemData from "./core-processor";
 import axios from "axios";
 
+const defaultOptions = {
+  itemData: "",
+  imageUrl: "",
+  showLinkAsIcon: false,
+  iconSize: "auto",
+  linkClasses: "",
+  linkText: "",
+  displayAsTooltip: false,
+  showIconInTooltip: false,
+  iconInTooltipSize: "auto",
+};
+
 export default {
   name: "ItemShowcase",
   components: {
     ItemShowcaseTooltip,
   },
   props: {
-    imageUrl: { type: String, default: "" },
-    showLinkAsIcon: { type: Boolean, default: false },
-    iconSize: { type: String, default: "auto" },
-    linkClasses: { type: String, default: "" },
-    linkText: { type: String, default: "" },
-    displayAsTooltip: { type: Boolean, default: false },
-    showIconInTooltip: { type: Boolean, default: false },
-    iconInTooltipSize: { type: String, default: "auto" },
+    id: { type: String, required: true },
   },
   data: function () {
     return {
+      options: { ...defaultOptions },
       item: {},
       showItem: false,
       imageAvalible: false,
+      popperOptions: {
+        defaultTrigger: "hover",
+        popover: {
+          defaultTrigger: "hover",
+          defaultPlacement: "auto",
+          defaultOffset: 20,
+        },
+      },
     };
   },
   mounted() {
-    try {
-      const itemData = this.$slots.default[0].children[0].text;
-      this.item = processItemData(itemData);
-      this.showItem = true;
-    } catch (e) {
-      this.showItem = false;
-    }
+    this.registerShowcase();
   },
   methods: {
     getImageSize(size) {
@@ -89,13 +101,26 @@ export default {
         }
       }
     },
+    applyOptions(options) {
+      this.options = {
+        ...this.options,
+        ...options,
+      };
+    },
+    registerShowcase() {
+      window.itemShowcases = window.itemShowcases || {};
+      window.itemShowcases[this.id] = {
+        instance: this,
+        applyOptions: this.applyOptions,
+      };
+    },
   },
   computed: {
     linkTextComputed() {
-      return this.linkText ? this.linkText : this.item.name;
+      return this.options.linkText ? this.options.linkText : this.item.name;
     },
     linkClassesComputed() {
-      let classes = `${this.linkClasses} item-link`;
+      let classes = `${this.options.linkClasses} item-link`;
       if (this.item.rarity) {
         return (
           classes + ` item-link item-link-${this.item.rarity.toLowerCase()}`
@@ -104,21 +129,31 @@ export default {
       return classes;
     },
     showImage() {
-      return this.showLinkAsIcon && this.imageAvalible;
+      return this.options.showLinkAsIcon && this.imageAvalible;
+    },
+    showTooltipImage() {
+      return this.imageAvalible && this.options.showIconInTooltip;
     },
     linkImageSize() {
-      return this.getImageSize(this.iconSize);
+      return this.getImageSize(this.options.iconSize);
     },
     tooltipImageSize() {
-      return this.getImageSize(this.iconInTooltipSize);
+      return this.getImageSize(this.options.iconInTooltipSize);
     },
   },
   watch: {
-    imageUrl: {
-      immediate: true,
-      handler: async function (value) {
+    options: {
+      immediate: false,
+      handler: async function (options) {
         try {
-          await axios.head(value);
+          this.item = processItemData(options.itemData);
+          this.showItem = true;
+        } catch {
+          this.showItem = false;
+        }
+
+        try {
+          await axios.head(options.imageUrl);
           this.imageAvalible = true;
         } catch {
           this.imageAvalible = false;
@@ -129,16 +164,24 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+@font-face {
+  font-family: "Fontin-SmallCaps";
+  src: local("Fontin-SmallCaps"),
+    url(../assets/Fontin-SmallCaps.ttf) format("truetype");
 }
-:root {
+.item-showcase,
+.vue-popover-theme {
+  display: inline-block;
+  text-align: center;
+  font-family: "Fontin-SmallCaps", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  font-style: normal;
+  font-variant-ligatures: none;
+  color: rgb(127, 127, 127);
+  background-color: black;
+  line-height: 24px;
   --poe-color-default: rgb(127, 127, 127);
   --poe-color-valuedefault: rgb(255, 255, 255);
   --poe-color-pink: rgb(255, 192, 203);

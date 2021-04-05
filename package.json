@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npm run serve",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve src/dev.main.js",
+    "build": "vue-cli-service build --target lib --name item-showcase src/build.main.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
@@ -13,7 +13,8 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "v-tooltip": "^2.1.3",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-custom-element": "^3.3.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

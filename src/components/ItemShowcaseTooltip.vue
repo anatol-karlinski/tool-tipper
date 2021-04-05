@@ -27,7 +27,10 @@
           }}</span>
         </div>
         <!-- Item level -->
-        <div class="item-separator" v-if="itemHasLevel"></div>
+        <div
+          class="item-separator"
+          v-if="itemHasLevel && itemProperties.length > 0"
+        ></div>
         <div v-if="itemHasLevel">
           {{ itemLevel.text }}<span v-if="itemLevel.level">: </span>
           <span class="item-level-value" v-if="itemLevel.level">{{
@@ -75,11 +78,11 @@
         <!-- Mirrored -->
         <div class="item-mirrored" v-if="itemIsMirrored">Mirrored</div>
         <!-- Image -->
-        <div class="item-separator" v-if="imageUrl"></div>
+        <div class="item-separator" v-if="showTooltipImage"></div>
         <img
           class="item-image"
           :src="imageUrl"
-          v-show="imageUrl"
+          v-show="showTooltipImage"
           :width="imageSize"
         />
       </div>
@@ -94,6 +97,7 @@ export default {
     item: { type: Object, default: () => {} },
     imageUrl: { type: String, default: "" },
     imageSize: { type: Number, default: 50 },
+    showImage: { type: Boolean, default: false },
   },
   methods: {
     getModifierClasses(modifier) {
@@ -106,6 +110,9 @@ export default {
     },
   },
   computed: {
+    showTooltipImage() {
+      return this.showImage && this.imageUrl;
+    },
     itemHeader() {
       return this.item.sections.find((x) => x.name === "Header");
     },
@@ -261,263 +268,250 @@ export default {
 </script>
 
 <style lang="scss">
-@font-face {
-  font-family: "Fontin-SmallCaps";
-  src: local("Fontin-SmallCaps"),
-    url(../assets/Fontin-SmallCaps.ttf) format("truetype");
-}
+.item-showcase,
+.vue-popover-theme {
+  .item-wrapper {
+    min-width: 360px;
+    border: 2px solid white;
 
-.item-wrapper {
-  display: inline-block;
-  text-align: center;
-  font-family: "Fontin-SmallCaps", Verdana, Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  font-style: normal;
-  font-variant-ligatures: none;
-  color: rgb(127, 127, 127);
-  background-color: black;
-  line-height: 24px;
-  min-width: 360px;
-  border: 2px solid white;
-
-  & .item-image {
-    margin-top: 12px;
-    margin-bottom: 4px;
+    & .item-image {
+      margin-top: 12px;
+      margin-bottom: 4px;
+    }
   }
-}
 
-.item-header {
-  white-space: nowrap;
-  font-size: 22px;
-  margin: 4px;
-  display: flex;
+  .item-header {
+    white-space: nowrap;
+    font-size: 22px;
+    margin: 4px;
+    display: flex;
 
-  &.item-header-single {
-    height: 32px;
-    background-image: url(../assets/Item-ui-header-single.png);
-
-    & .item-header-left-panel {
+    &.item-header-single {
+      height: 32px;
       background-image: url(../assets/Item-ui-header-single.png);
-      width: 32px;
-      &.item-influenced img {
-        margin-top: 2px;
-        position: absolute;
-        margin-left: -5px;
+
+      & .item-header-left-panel {
+        background-image: url(../assets/Item-ui-header-single.png);
+        width: 32px;
+        &.item-influenced img {
+          margin-top: 2px;
+          position: absolute;
+          margin-left: -5px;
+        }
+      }
+
+      & .item-header-right-panel {
+        background-image: url(../assets/Item-ui-header-single.png);
+        width: 32px;
+        background-position-x: -1px;
+
+        &.item-influenced img {
+          margin-top: 2px;
+          position: relative;
+          right: 6px;
+        }
+      }
+
+      & .item-header-center {
+        width: 100%;
+        line-height: 23px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        & div:nth-child(1) {
+          margin-top: 4px;
+        }
       }
     }
 
-    & .item-header-right-panel {
-      background-image: url(../assets/Item-ui-header-single.png);
-      width: 32px;
-      background-position-x: -2px;
-
-      &.item-influenced img {
-        margin-top: 2px;
-        position: relative;
-        right: 6px;
-      }
-    }
-
-    & .item-header-center {
-      width: 100%;
-      line-height: 23px;
-      padding-left: 10px;
-      padding-right: 10px;
-
-      & div:nth-child(1) {
-        margin-top: 4px;
-      }
-    }
-  }
-
-  &.item-header-double {
-    height: 52px;
-    background-image: url(../assets/Item-ui-header-double.png);
-
-    & .item-header-left-panel {
+    &.item-header-double {
+      height: 52px;
       background-image: url(../assets/Item-ui-header-double.png);
-      width: 40px;
-    }
 
-    & .item-header-right-panel {
-      background-image: url(../assets/Item-ui-header-double.png);
-      width: 40px;
-      background-position-x: -10px;
-    }
+      & .item-header-left-panel {
+        background-image: url(../assets/Item-ui-header-double.png);
+        width: 40px;
+      }
 
-    & .item-header-center {
-      width: 100%;
-      line-height: 23px;
-      & div:nth-child(1) {
-        margin-top: 2px;
+      & .item-header-right-panel {
+        background-image: url(../assets/Item-ui-header-double.png);
+        width: 40px;
+        background-position-x: -8px;
+      }
+
+      & .item-header-center {
+        width: 100%;
+        line-height: 23px;
+        & div:nth-child(1) {
+          margin-top: 2px;
+        }
+      }
+
+      & .item-influenced img {
+        margin-top: 13px;
       }
     }
+  }
 
-    & .item-influenced img {
-      margin-top: 13px;
-    }
+  .modifier-crafted {
+    color: var(--poe-color-essencemod) !important;
   }
-}
 
-.modifier-crafted {
-  color: var(--poe-color-essencemod) !important;
-}
-
-.gem-description {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 500px;
-  color: var(--poe-color-gem);
-}
-
-.item-property-value,
-.item-level-value {
-  color: white;
-}
-
-.item-implicit,
-.item-modifier,
-.item-mirrored {
-  color: var(--poe-color-augmented);
-}
-
-.item-enchant {
-  color: var(--poe-color-essencemod);
-}
-
-.item-corrupted {
-  color: var(--poe-color-corrupted);
-}
-
-.item-separator {
-  height: 2px;
-  background-repeat: no-repeat;
-  background-position-x: center;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  background-image: url(./../assets/Item-ui-separators.png);
-}
-
-.item-stats {
-  padding: 12px;
-  padding-top: 4px;
-}
-
-.unique-item {
-  &.item-wrapper {
-    border-color: var(--poe-color-unique);
-  }
-  & .item-header {
-    color: var(--poe-color-unique);
-    background-position-y: 106px;
-  }
-  & .item-separator {
-    background-position-y: -6px;
-  }
-  & .item-header-left-panel {
-    background-position-y: 160px;
-  }
-  & .item-header-right-panel {
-    background-position-y: 52px;
-  }
-}
-
-.rare-item {
-  &.item-wrapper {
-    border-color: var(--poe-color-rare);
-  }
-  & .item-header {
-    color: var(--poe-color-rare);
-    background-position-y: -55px;
-  }
-  & .item-separator {
-    background-position-y: -4px;
-  }
-  & .item-header-left-panel {
-    background-position-y: -1px;
-  }
-  & .item-header-right-panel {
-    background-position-y: -109px;
-  }
-}
-
-.magic-item {
-  &.item-wrapper {
-    border-color: var(--poe-color-magic);
-  }
-  & .item-header {
-    color: var(--poe-color-magic);
-    background-position-y: 474px;
-  }
-  & .item-separator {
-    background-position-y: -2px;
-  }
-  & .item-header-left-panel {
-    background-position-y: 508px;
-  }
-  & .item-header-right-panel {
-    background-position-y: 440px;
-  }
-}
-
-.normal-item {
-  &.item-wrapper {
-    border-color: var(--poe-color-normal);
-  }
-  & .item-header {
-    color: var(--poe-color-normal);
-    background-position-y: 578px;
-  }
-  & .item-separator {
-    background-position-y: -8px;
-  }
-  & .item-header-left-panel {
-    background-position-y: 612px;
-  }
-  & .item-header-right-panel {
-    background-position-y: 544px;
-  }
-}
-
-.gem-item {
-  &.item-wrapper {
-    border-color: var(--poe-color-gem);
-  }
-  & .item-header {
+  .gem-description {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
     color: var(--poe-color-gem);
-    background-position-y: 883px;
   }
-  & .item-separator {
-    background-position-y: -10px;
-  }
-  & .item-header-left-panel {
-    background-position-y: 917px;
-  }
-  & .item-header-right-panel {
-    background-position-y: 849px;
-  }
-}
 
-.item-influenced-elder img {
-  content: url(../assets/influence-icons/Elder.png);
-}
-.item-influenced-shaper img {
-  content: url(../assets/influence-icons/Shaper.png);
-}
-.item-influenced-hunter img {
-  content: url(../assets/influence-icons/Hunter.png);
-}
-.item-influenced-crusader img {
-  content: url(../assets/influence-icons/Crusader.png);
-}
-.item-influenced-redeemer img {
-  content: url(../assets/influence-icons/Redeemer.png);
-}
-.item-influenced-warlord img {
-  content: url(../assets/influence-icons/Warlord.png);
-}
-.item-influenced-replica img {
-  content: url(../assets/influence-icons/Replica.png);
+  .item-property-value,
+  .item-level-value {
+    color: white;
+  }
+
+  .item-implicit,
+  .item-modifier,
+  .item-mirrored {
+    color: var(--poe-color-augmented);
+  }
+
+  .item-enchant {
+    color: var(--poe-color-essencemod);
+  }
+
+  .item-corrupted {
+    color: var(--poe-color-corrupted);
+  }
+
+  .item-separator {
+    height: 2px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background-image: url(./../assets/Item-ui-separators.png);
+  }
+
+  .item-stats {
+    padding: 12px;
+    padding-top: 4px;
+  }
+
+  .unique-item {
+    &.item-wrapper {
+      border-color: var(--poe-color-unique);
+    }
+    & .item-header {
+      color: var(--poe-color-unique);
+      background-position-y: 106px;
+    }
+    & .item-separator {
+      background-position-y: -6px;
+    }
+    & .item-header-left-panel {
+      background-position-y: 160px;
+    }
+    & .item-header-right-panel {
+      background-position-y: 52px;
+    }
+  }
+
+  .rare-item {
+    &.item-wrapper {
+      border-color: var(--poe-color-rare);
+    }
+    & .item-header {
+      color: var(--poe-color-rare);
+      background-position-y: -55px;
+    }
+    & .item-separator {
+      background-position-y: -4px;
+    }
+    & .item-header-left-panel {
+      background-position-y: -1px;
+    }
+    & .item-header-right-panel {
+      background-position-y: -109px;
+    }
+  }
+
+  .magic-item {
+    &.item-wrapper {
+      border-color: var(--poe-color-magic);
+    }
+    & .item-header {
+      color: var(--poe-color-magic);
+      background-position-y: 474px;
+    }
+    & .item-separator {
+      background-position-y: -2px;
+    }
+    & .item-header-left-panel {
+      background-position-y: 508px;
+    }
+    & .item-header-right-panel {
+      background-position-y: 440px;
+    }
+  }
+
+  .normal-item {
+    &.item-wrapper {
+      border-color: var(--poe-color-normal);
+    }
+    & .item-header {
+      color: var(--poe-color-normal);
+      background-position-y: 578px;
+    }
+    & .item-separator {
+      background-position-y: -8px;
+    }
+    & .item-header-left-panel {
+      background-position-y: 612px;
+    }
+    & .item-header-right-panel {
+      background-position-y: 544px;
+    }
+  }
+
+  .gem-item {
+    &.item-wrapper {
+      border-color: var(--poe-color-gem);
+    }
+    & .item-header {
+      color: var(--poe-color-gem);
+      background-position-y: 883px;
+    }
+    & .item-separator {
+      background-position-y: -10px;
+    }
+    & .item-header-left-panel {
+      background-position-y: 917px;
+    }
+    & .item-header-right-panel {
+      background-position-y: 849px;
+    }
+  }
+
+  .item-influenced-elder img {
+    content: url(../assets/influence-icons/Elder.png);
+  }
+  .item-influenced-shaper img {
+    content: url(../assets/influence-icons/Shaper.png);
+  }
+  .item-influenced-hunter img {
+    content: url(../assets/influence-icons/Hunter.png);
+  }
+  .item-influenced-crusader img {
+    content: url(../assets/influence-icons/Crusader.png);
+  }
+  .item-influenced-redeemer img {
+    content: url(../assets/influence-icons/Redeemer.png);
+  }
+  .item-influenced-warlord img {
+    content: url(../assets/influence-icons/Warlord.png);
+  }
+  .item-influenced-replica img {
+    content: url(../assets/influence-icons/Replica.png);
+  }
 }
 </style>

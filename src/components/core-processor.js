@@ -1,4 +1,8 @@
 export default (description) => {
+  if (!description) {
+    throw new Error();
+  }
+
   const descriptionLines = descriptionToLines(description);
   let rawSections = splitLinesIntoSections(descriptionLines);
   rawSections = cleanupRawSections(rawSections);
@@ -61,12 +65,14 @@ const getItemType = (sections) => {
     return "";
   }
 
-  const rarityLine = headerSection.lines[0];
-  const typeLine = headerSection.lines[1];
+  const typeLine = headerSection.lines[headerSection.lines.length - 1];
 
   if (typeLine.includes("Jewel")) return "Jewel";
   if (typeLine.includes("Flask")) return "Flask";
+
+  const rarityLine = headerSection.lines[0];
   if (rarityLine.includes("Gem")) return "Gem";
+
   return "Equipment";
 };
 
