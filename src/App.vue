@@ -105,21 +105,6 @@ export default {
     window.itemShowcases.test2.applyOptions({
       showLinkAsIcon: true,
       displayAsTooltip: true,
-      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e0/Medium_Cluster_Jewel_inventory_icon.png`,
-      itemData: `
-          Rarity: Normal
-          Medium Cluster Jewel
-          --------
-          Item Level: 81
-          --------
-          Adds 5 Passive Skills (enchant)
-          1 Added Passive Skill is a Jewel Socket (enchant)
-          Added Small Passive Skills grant: 3% increased effect of Non-Curse Auras from your Skills (enchant)
-`,
-    });
-    window.itemShowcases.test3.applyOptions({
-      showLinkAsIcon: true,
-      displayAsTooltip: true,
       imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/c/c9/Diamond_Flask_inventory_icon.png`,
       itemData: `
           Rarity: Magic
@@ -139,6 +124,21 @@ export default {
           31% increased Charge Recovery
           Immune to Curses during Flask effect
           Removes Curses on use
+`,
+    });
+    window.itemShowcases.test3.applyOptions({
+      showLinkAsIcon: true,
+      displayAsTooltip: true,
+      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e0/Medium_Cluster_Jewel_inventory_icon.png`,
+      itemData: `
+          Rarity: Normal
+          Medium Cluster Jewel
+          --------
+          Item Level: 81
+          --------
+          Adds 5 Passive Skills (enchant)
+          1 Added Passive Skill is a Jewel Socket (enchant)
+          Added Small Passive Skills grant: 3% increased effect of Non-Curse Auras from your Skills (enchant)
 `,
     });
     window.itemShowcases.test4.applyOptions({
