@@ -113,24 +113,20 @@ export default {
     showTooltipImage() {
       return this.showImage && this.imageUrl;
     },
-    itemHeader() {
-      return this.item.sections.find((x) => x.name === "Header");
-    },
     itemName() {
-      return this.itemHeader.lines[1];
+      return this.item.header ? this.item.header.lines[1] : "";
     },
     itemSubname() {
-      return this.itemHeader.lines.length > 1 ? this.itemHeader.lines[2] : "";
+      return this.item.header && this.item.header.lines.length > 1
+        ? this.item.header.lines[2]
+        : "";
     },
     itemHasSubname() {
       return !!this.itemSubname;
     },
     itemLevel() {
-      const itemLevelSection = this.item.sections.find(
-        (x) => x.name === "Item level"
-      );
-      const itemLevelLine = itemLevelSection
-        ? itemLevelSection.lines[0].split(":")
+      const itemLevelLine = this.item.level
+        ? this.item.level.lines[0].split(":")
         : "";
       return itemLevelLine
         ? {
@@ -143,11 +139,8 @@ export default {
       return !!this.itemLevel;
     },
     itemProperties() {
-      const properties = this.item.sections.find(
-        (x) => x.name === "Properties"
-      );
-      return properties
-        ? properties.lines.map((x) => {
+      return this.item.properties
+        ? this.item.properties.lines.map((x) => {
             const propertyLine = x.split(":");
             const property = {
               key: propertyLine[0].replace(" (augmented)", "").trim(),
@@ -163,36 +156,26 @@ export default {
         : [];
     },
     itemEnchants() {
-      const enchantsSection = this.item.sections.find(
-        (x) => x.name === "Enchants"
-      );
-
-      return enchantsSection
-        ? enchantsSection.lines.map((x) => x.replace("(enchant)", "").trim())
+      return this.item.enchants
+        ? this.item.enchants.lines.map((x) => x.replace("(enchant)", "").trim())
         : [];
     },
     itemHasEnchants() {
       return this.itemEnchants && this.itemEnchants.length > 0;
     },
     itemImplicits() {
-      const implicitSection = this.item.sections.find(
-        (x) => x.name === "Implicits"
-      );
-
-      return implicitSection
-        ? implicitSection.lines.map((x) => x.replace("(implicit)", "").trim())
+      return this.item.implicits
+        ? this.item.implicits.lines.map((x) =>
+            x.replace("(implicit)", "").trim()
+          )
         : [];
     },
     itemHasImplicits() {
       return this.itemImplicits && this.itemImplicits.length > 0;
     },
     itemModifiers() {
-      const modifiersSection = this.item.sections.find(
-        (x) => x.name === "Modifiers"
-      );
-
-      return modifiersSection
-        ? modifiersSection.lines.map((x) => ({
+      return this.item.modifiers
+        ? this.item.modifiers.lines.map((x) => ({
             text: x.replace("(crafted)", "").trim(),
             isCrafter: x.includes("(crafted)"),
           }))
@@ -202,17 +185,13 @@ export default {
       return this.itemModifiers && this.itemModifiers.length > 0;
     },
     itemIsCorrupted() {
-      return !!this.item.sections.some((x) => x.name === "Corruption status");
+      return !!this.item.isCorrupted;
     },
     itemIsMirrored() {
-      return !!this.item.sections.some((x) => x.name === "Mirrored status");
+      return !!this.item.isMirrored;
     },
     itemGemDescription() {
-      const gemDescriptionSection = this.item.sections.find(
-        (x) => x.name === "Gem description"
-      );
-
-      return gemDescriptionSection ? gemDescriptionSection.lines : [];
+      return this.item.gemDescription ? this.item.gemDescription.lines : [];
     },
     itemHasGemDescription() {
       return this.itemGemDescription && this.itemGemDescription.length > 0;
@@ -348,7 +327,7 @@ export default {
       }
 
       & .item-influenced img {
-        margin-top: 13px;
+        margin-top: 12px;
       }
     }
   }

@@ -8,14 +8,21 @@
         justify-content: center;
       "
     >
-      <poe-item-showcase id="test0" />
-      <poe-item-showcase id="test1" />
+      <!-- <poe-item-showcase id="test0" /> -->
+      <!---<poe-item-showcase id="test1" />
       <poe-item-showcase id="test2" />
       <poe-item-showcase id="test3" />
-      <poe-item-showcase id="test4" />
+      <poe-item-showcase id="test4" /> -->
+      <poe-node-showcase id="nodeTest0" />
     </div>
     <div
-      style="height: 2px; width: 100%; margin: 20px; border-top: 1px solid grey"
+      style="
+        display: none;
+        height: 2px;
+        width: 100%;
+        margin: 20px;
+        border-top: 1px solid grey;
+      "
     />
     <div
       style="
@@ -25,27 +32,33 @@
         justify-content: center;
       "
     >
-      <le-item-showcase id="test5" />
+      <!-- <le-item-showcase id="test5" /> -->
     </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-components */
+
 import PoeItemShowcase from "./components/path-of-exile/poe-item-showcase.vue";
 import LeItemShowcase from "./components/last-epoch/le-item-showcase.vue";
+import PoeNodeShowcase from "./components/path-of-exile/poe-node-showcase-tooltip.vue";
 
 export default {
   name: "App",
   components: {
     PoeItemShowcase,
     LeItemShowcase,
+    PoeNodeShowcase,
   },
   mounted() {
-    window.itemShowcases.test0.applyOptions({
-      showLinkAsIcon: true,
-      displayAsTooltip: true,
-      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/a/a0/The_Eternity_Shroud_inventory_icon.png`,
-      itemData: `
+    try {
+      window.itemShowcases.test0.applyOptions({
+        showLinkAsIcon: true,
+        displayAsTooltip: false,
+        showIconInTooltip: true,
+        imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/a/a0/The_Eternity_Shroud_inventory_icon.png`,
+        itemData: `
           Rarity: Unique
           Replica Eternity Shroud
           Blood Raiment
@@ -78,12 +91,12 @@ export default {
           --------
           Has Perfidy Skin. You can reclaim this by shift-clicking this item.
 `,
-    });
-    window.itemShowcases.test1.applyOptions({
-      showLinkAsIcon: true,
-      displayAsTooltip: true,
-      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/5/56/Harlequin_Mask_inventory_icon.png`,
-      itemData: `
+      });
+      window.itemShowcases.test1.applyOptions({
+        showLinkAsIcon: true,
+        displayAsTooltip: true,
+        imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/5/56/Harlequin_Mask_inventory_icon.png`,
+        itemData: `
           Rarity: Rare
           Brood Halo
           Harlequin Mask
@@ -116,12 +129,12 @@ export default {
           --------
           Has Assailum Skin. You can reclaim this by shift-clicking this item.
 `,
-    });
-    window.itemShowcases.test2.applyOptions({
-      showLinkAsIcon: true,
-      displayAsTooltip: true,
-      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/c/c9/Diamond_Flask_inventory_icon.png`,
-      itemData: `
+      });
+      window.itemShowcases.test2.applyOptions({
+        showLinkAsIcon: true,
+        displayAsTooltip: true,
+        imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/c/c9/Diamond_Flask_inventory_icon.png`,
+        itemData: `
           Rarity: Magic
           Perpetual Diamond Flask of Warding
           --------
@@ -140,12 +153,12 @@ export default {
           Immune to Curses during Flask effect
           Removes Curses on use
 `,
-    });
-    window.itemShowcases.test3.applyOptions({
-      showLinkAsIcon: true,
-      displayAsTooltip: true,
-      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e0/Medium_Cluster_Jewel_inventory_icon.png`,
-      itemData: `
+      });
+      window.itemShowcases.test3.applyOptions({
+        showLinkAsIcon: true,
+        displayAsTooltip: true,
+        imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e0/Medium_Cluster_Jewel_inventory_icon.png`,
+        itemData: `
           Rarity: Normal
           Medium Cluster Jewel
           --------
@@ -155,12 +168,12 @@ export default {
           1 Added Passive Skill is a Jewel Socket (enchant)
           Added Small Passive Skills grant: 3% increased effect of Non-Curse Auras from your Skills (enchant)
 `,
-    });
-    window.itemShowcases.test4.applyOptions({
-      showLinkAsIcon: true,
-      displayAsTooltip: true,
-      imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/4/48/Despair_inventory_icon.png`,
-      itemData: `
+      });
+      window.itemShowcases.test4.applyOptions({
+        showLinkAsIcon: true,
+        displayAsTooltip: true,
+        imageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/4/48/Despair_inventory_icon.png`,
+        itemData: `
           Rarity: Gem
           Anomalous Despair
           --------
@@ -186,11 +199,11 @@ export default {
           Cursed enemies take 25% increased Damage from Damage Over Time effects
           Adds 46 to 57 Chaos Damage to Hits against Cursed Enemies
 `,
-    });
-    window.itemShowcases.test5.applyOptions({
-      showIconInTooltip: true,
-      imageUrl: `https://lastepoch.tunklab.com/image/Call_of_the_Tundra.png`,
-      itemData: `
+      });
+      window.itemShowcases.test5.applyOptions({
+        showIconInTooltip: true,
+        imageUrl: `https://lastepoch.tunklab.com/image/Call_of_the_Tundra.png`,
+        itemData: `
           Rarity: Unique
           Call of the Tundra
           Helmet
@@ -209,14 +222,17 @@ export default {
           +18 Health Regen
           18 Health Gain on Freeze
 `,
-    });
+      });
+    } catch {
+      // no-op
+    }
   },
 };
 </script>
 
 <style lang="scss">
 body {
-  background-color: black;
+  background-color: grey;
   overflow: hidden;
 }
 .poe-item-showcase {

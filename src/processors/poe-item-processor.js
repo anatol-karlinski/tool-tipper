@@ -9,11 +9,48 @@ export default (rawDescription) => {
 
   const itemData = processItemDescription(rawDescription);
   const itemType = getItemType(itemData.sections);
+
   itemData.sections = fillUnknownSections(itemData.sections, itemType);
   itemData.sections = removeUnknownSections(itemData.sections);
-  const itemInfluences = getItemInfluences(itemData.sections);
 
-  return { ...itemData, type: itemType, influences: itemInfluences };
+  const itemInfluences = getItemInfluences(itemData.sections);
+  const itemLevel = itemData.sections.find((x) => x.name === "Item level");
+  const itemRequirements = itemData.sections.find(
+    (x) => x.name === "Requirements"
+  );
+  const itemEnchants = itemData.sections.find((x) => x.name === "Enchants");
+  const itemImplicits = itemData.sections.find((x) => x.name === "Implicits");
+  const itemHeader = itemData.sections.find((x) => x.name === "Header");
+  const itemSockets = itemData.sections.find((x) => x.name === "Sockets");
+  const itemProperties = itemData.sections.find((x) => x.name === "Properties");
+  const itemModifiers = itemData.sections.find((x) => x.name === "Modifiers");
+  const itemGemDescription = itemData.sections.find(
+    (x) => x.name === "Gem description"
+  );
+  const itemCorruptionStatus = itemData.sections.some(
+    (x) => x.name === "Corrupted status"
+  );
+  const itemMirroredStatus = itemData.sections.some(
+    (x) => x.name === "Mirrored status"
+  );
+
+  return {
+    type: itemType,
+    name: itemData.name,
+    rarity: itemData.rarity,
+    influences: itemInfluences,
+    header: itemHeader,
+    level: itemLevel,
+    requirements: itemRequirements,
+    enchants: itemEnchants,
+    implicits: itemImplicits,
+    sockets: itemSockets,
+    properties: itemProperties,
+    modifiers: itemModifiers,
+    gemDescription: itemGemDescription,
+    isCorrupted: itemCorruptionStatus,
+    isMirrored: itemMirroredStatus,
+  };
 };
 
 const getItemType = (sections) => {
