@@ -22,7 +22,7 @@ export default {
       };
     },
     registerShowcase() {
-      window.nodeShowcases = window.itemShowcases || {};
+      window.nodeShowcases = window.nodeShowcases || {};
       window.nodeShowcases[this.id] = {
         instance: this,
         applyOptions: this.applyOptions,
@@ -35,7 +35,7 @@ export default {
   watch: {
     options: {
       immediate: false,
-      handler: async function (options) {
+      handler: function (options) {
         try {
           this.node = this.processNodeData(options.nodeData);
           this.showNode = true;

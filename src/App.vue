@@ -42,7 +42,7 @@
 
 import PoeItemShowcase from "./components/path-of-exile/poe-item-showcase.vue";
 import LeItemShowcase from "./components/last-epoch/le-item-showcase.vue";
-import PoeNodeShowcase from "./components/path-of-exile/poe-node-showcase-tooltip.vue";
+import PoeNodeShowcase from "./components/path-of-exile/poe-node-showcase.vue";
 
 export default {
   name: "App",
@@ -53,6 +53,11 @@ export default {
   },
   mounted() {
     try {
+      window.nodeShowcases.nodeTest0.applyOptions({
+        showImage: true,
+        imageUrl:
+          "https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e7/Amplify_passive_skill_icon.png",
+      });
       window.itemShowcases.test0.applyOptions({
         showLinkAsIcon: true,
         displayAsTooltip: false,

@@ -35,7 +35,7 @@ export default {
   watch: {
     options: {
       immediate: false,
-      handler: async function (options) {
+      handler: function (options) {
         try {
           this.item = this.processItemData(options.itemData);
           this.showItem = true;

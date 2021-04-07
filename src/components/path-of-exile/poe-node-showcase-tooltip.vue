@@ -18,38 +18,39 @@
           {{ descLine }}
         </div>
       </div>
+      <!-- Icon -->
+      <div v-if="showTooltipIcon" class="node-icon">
+        <img :style="`background-image: url(${this.nodeIcon})`" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import nodeShowcaseMixin from "./../shared/node-showcase.mixin";
-import processNodeData from "../../processors/poe-node-processor";
-
 export default {
   name: "PoeNodeShowcaseTooltip",
-  mixins: [nodeShowcaseMixin],
-  methods: {
-    processNodeData(rawDescription) {
-      return processNodeData(rawDescription);
-    },
+  props: {
+    node: { type: Object, default: () => {} },
   },
   computed: {
     nodeName() {
-      return "Kineticism";
+      return this.node ? this.node.name : "";
     },
     nodeType() {
-      return "Keystone";
+      return this.node ? this.node.type : "";
     },
     nodeDescription() {
-      return [
-        "Attack Projectiles always inflict Bleeding and Maim, and Knock Back Enemies",
-        "Projectiles cannot Pierce, Fork or Chain",
-      ];
+      return this.node ? this.node.description : [];
+    },
+    nodeIcon() {
+      return this.options ? this.options.imageUrl : "";
+    },
+    showTooltipIcon() {
+      return this.options && this.options.imageUrl && this.options.showImage;
     },
     wrapperClasses() {
       let classes = `node-showcase-wrapper`;
-      if (this.nodeType.length > 0) {
+      if (this.nodeType) {
         classes += ` node-${this.nodeType.toLowerCase()}`;
       }
 
@@ -60,83 +61,106 @@ export default {
 </script>
 
 <style lang="scss">
-@use "./_styles" as styles;
-
 .node-showcase-wrapper {
-  @include styles.font;
-  @include styles.colors;
-
+  background-color: black;
   & .node-header {
     min-width: 176px;
-    height: 53px;
+    height: 73px;
     color: var(--poe-color-node-titel);
     display: flex;
-    font-size: 20px;
+    font-size: 28px;
     white-space: nowrap;
-    background-image: url(../../assets/poe/Node-ui-header-small.png);
-
+    background-image: url(../../assets/poe/Node-ui-header.png);
     & .node-header-center {
       justify-self: center;
       text-align: center;
       align-self: center;
-      min-width: 48px;
+      min-width: 100px;
       width: 100%;
     }
     & .node-header-left,
     & .node-header-right {
-      width: 48px;
-      background-image: url(../../assets/poe/Node-ui-header-small.png);
+      width: 98px;
+      background-image: url(../../assets/poe/Node-ui-header.png);
+    }
+  }
+  & .node-icon {
+    padding-top: 12px;
+    padding-bottom: 25px;
+  }
+  &.node-basic {
+    & .node-header {
+      background-position-y: -1278px;
+      & .node-header-left {
+        background-position-y: -1203px;
+      }
+      & .node-header-right {
+        background-position-y: -1128px;
+      }
+    }
+    & .node-icon {
+      & img {
+        content: url(../../assets/poe/Basic_passive_frame.png);
+        background-size: 35px;
+        background-position-x: 14px;
+        background-position-y: 14px;
+        background-repeat: no-repeat;
+        width: 62px;
+      }
     }
   }
 
-  &.node-basic {
-    & .node-header {
-      background-position-y: -898px;
-      & .node-header-left {
-        background-position-y: -792px;
-      }
-      & .node-header-right {
-        background-position-y: -845px;
-        background-position-x: -1px;
-      }
-    }
-  }
   &.node-notable {
     & .node-header {
-      background-position-y: -264px;
+      background-position-y: -377px;
       & .node-header-left {
-        background-position-y: -159px;
+        background-position-y: -302px;
       }
       & .node-header-right {
-        background-position-y: -211px;
-        background-position-x: -1px;
+        background-position-y: -227px;
+      }
+    }
+    & .node-icon {
+      & img {
+        content: url(../../assets/poe/Notable_passive_frame.png);
+        background-position-x: 14px;
+        background-position-y: 14px;
+        background-repeat: no-repeat;
+        background-size: 47px;
+        width: 75px;
       }
     }
   }
   &.node-keystone {
     & .node-header {
       color: #e2dedd !important;
-      height: 52px;
-      background-position-y: -106px;
-
+      background-position-y: -152px;
       & .node-header-left {
-        background-position-y: 0px;
+        background-position-y: -77px;
       }
       & .node-header-right {
-        background-position-y: -53px;
-        background-position-x: -1px;
+        background-position-y: -2px;
+      }
+    }
+    & .node-icon {
+      & img {
+        content: url(../../assets/poe/Keystone_passive_frame.png);
+        background-position-x: 18px;
+        background-position-y: 18px;
+        background-repeat: no-repeat;
+        background-size: 52px;
+        width: 90px;
       }
     }
   }
   & .node-description {
-    background-color: black;
     padding: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: left;
     color: var(--poe-color-augmented);
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 18px;
+    line-height: 22px;
   }
 }
 </style>
