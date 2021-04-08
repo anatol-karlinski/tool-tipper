@@ -54,7 +54,9 @@ export default {
   mounted() {
     try {
       window.nodeShowcases.nodeTest0.applyOptions({
+        displayAsTooltip: true,
         showImage: true,
+        showIconInTooltip: true,
         imageUrl:
           "https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e7/Amplify_passive_skill_icon.png",
       });
@@ -237,7 +239,7 @@ export default {
 
 <style lang="scss">
 body {
-  background-color: grey;
+  background-color: black;
   overflow: hidden;
 }
 .poe-item-showcase {

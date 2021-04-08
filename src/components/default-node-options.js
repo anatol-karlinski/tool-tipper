@@ -1,5 +1,5 @@
 export default {
-  itemData: "",
+  nodeData: "",
   imageUrl: "",
   showLinkAsIcon: false,
   iconSize: "auto",

@@ -4,24 +4,24 @@
       <v-popover
         trigger="hover"
         placement="auto"
-        :offset="20"
         :popoverClass="[`poe-node-showcase-popover`]"
       >
-        <a v-if="!showImage" :class="linkClassesComputed">{{
-          linkTextComputed
-        }}</a>
-        <img v-else :width="linkNodeSize" :src="options.imageUrl" />
-        <br />
-        <span v-show="options.showIconLabel && showImage && node.name">
-          {{ item.name }}
-        </span>
+        <div v-if="options.showImage">
+          <poe-node-image :type="node.type" :imageUrl="options.imageUrl" />
+          <span
+            v-show="options.showIconLabel && options.showImage && node.name"
+          >
+            {{ node.name }}
+          </span>
+        </div>
+        <a v-else :class="linkClassesComputed">{{ linkTextComputed }}</a>
+
         <template slot="popover">
           <poe-node-showcase-tooltip
             v-if="showNode"
             :node="node"
             :imageUrl="options.imageUrl"
-            :showImage="showTooltipImage"
-            :imageSize="tooltipImageSize"
+            :showImage="options.showIconInTooltip"
           />
         </template>
       </v-popover>
@@ -31,6 +31,7 @@
         v-if="showNode"
         :node="node"
         :imageUrl="options.imageUrl"
+        :showImage="options.showIconInTooltip"
       />
     </div>
   </div>
@@ -38,16 +39,34 @@
 
 <script>
 import PoeNodeShowcaseTooltip from "./poe-node-showcase-tooltip.vue";
+import PoeNodeImage from "./poe-node-image.vue";
 import nodeShowcaseMixin from "./../shared/node-showcase.mixin";
 import processNodeData from "../../processors/poe-node-processor";
 
 export default {
   name: "PoeNodeShowcase",
   mixins: [nodeShowcaseMixin],
-  components: { PoeNodeShowcaseTooltip },
+  components: { PoeNodeShowcaseTooltip, PoeNodeImage },
   methods: {
     processNodeData(rawDescription) {
       return processNodeData(rawDescription);
+    },
+  },
+  computed: {
+    linkClassesComputed() {
+      let classes = `${this.options.linkClasses} node-link`;
+
+      if (this.node && this.node.type) {
+        return classes + ` node-link node-link-${this.node.type.toLowerCase()}`;
+      }
+      return classes;
+    },
+    linkTextComputed() {
+      return this.options.linkText
+        ? this.options.linkText
+        : this.node
+        ? this.node.name
+        : "";
     },
   },
 };
@@ -55,9 +74,13 @@ export default {
 
 <style lang="scss">
 @use "./_styles" as styles;
+
 .poe-node-showcase-popover,
 .poe-node-showcase {
   @include styles.font;
   @include styles.colors;
+}
+.node-link {
+  color: var(--poe-color-node-title);
 }
 </style>

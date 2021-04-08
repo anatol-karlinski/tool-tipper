@@ -19,18 +19,27 @@
         </div>
       </div>
       <!-- Icon -->
-      <div v-if="showTooltipIcon" class="node-icon">
-        <img :style="`background-image: url(${this.nodeIcon})`" />
-      </div>
+      <poe-node-image
+        v-if="showTooltipIcon"
+        :type="nodeType"
+        :imageUrl="this.imageUrl"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import PoeNodeImage from "./poe-node-image.vue";
+
 export default {
   name: "PoeNodeShowcaseTooltip",
   props: {
     node: { type: Object, default: () => {} },
+    imageUrl: { type: String, default: "" },
+    showImage: { type: Boolean, default: false },
+  },
+  components: {
+    PoeNodeImage,
   },
   computed: {
     nodeName() {
@@ -42,14 +51,11 @@ export default {
     nodeDescription() {
       return this.node ? this.node.description : [];
     },
-    nodeIcon() {
-      return this.options ? this.options.imageUrl : "";
-    },
     showTooltipIcon() {
-      return this.options && this.options.imageUrl && this.options.showImage;
+      return this.imageUrl && this.showImage;
     },
     wrapperClasses() {
-      let classes = `node-showcase-wrapper`;
+      let classes = `node-showcase-tooltip-wrapper`;
       if (this.nodeType) {
         classes += ` node-${this.nodeType.toLowerCase()}`;
       }
@@ -61,12 +67,15 @@ export default {
 </script>
 
 <style lang="scss">
-.node-showcase-wrapper {
+.node-showcase-tooltip-wrapper {
   background-color: black;
+  border: 2px solid #403b2e;
+  transform: scale(0.8);
+
   & .node-header {
     min-width: 176px;
     height: 73px;
-    color: var(--poe-color-node-titel);
+    color: var(--poe-color-node-title);
     display: flex;
     font-size: 28px;
     white-space: nowrap;
@@ -98,18 +107,16 @@ export default {
         background-position-y: -1128px;
       }
     }
-    & .node-icon {
-      & img {
-        content: url(../../assets/poe/Basic_passive_frame.png);
-        background-size: 35px;
-        background-position-x: 14px;
-        background-position-y: 14px;
-        background-repeat: no-repeat;
-        width: 62px;
-      }
-    }
   }
-
+  & .node-description {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+    color: var(--poe-color-augmented);
+    font-size: 18px;
+    line-height: 22px;
+  }
   &.node-notable {
     & .node-header {
       background-position-y: -377px;
@@ -118,16 +125,6 @@ export default {
       }
       & .node-header-right {
         background-position-y: -227px;
-      }
-    }
-    & .node-icon {
-      & img {
-        content: url(../../assets/poe/Notable_passive_frame.png);
-        background-position-x: 14px;
-        background-position-y: 14px;
-        background-repeat: no-repeat;
-        background-size: 47px;
-        width: 75px;
       }
     }
   }
@@ -142,25 +139,6 @@ export default {
         background-position-y: -2px;
       }
     }
-    & .node-icon {
-      & img {
-        content: url(../../assets/poe/Keystone_passive_frame.png);
-        background-position-x: 18px;
-        background-position-y: 18px;
-        background-repeat: no-repeat;
-        background-size: 52px;
-        width: 90px;
-      }
-    }
-  }
-  & .node-description {
-    padding: 10px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-align: left;
-    color: var(--poe-color-augmented);
-    font-size: 18px;
-    line-height: 22px;
   }
 }
 </style>
