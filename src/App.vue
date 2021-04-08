@@ -56,9 +56,16 @@ export default {
       window.nodeShowcases.nodeTest0.applyOptions({
         displayAsTooltip: true,
         showImage: true,
-        showIconInTooltip: true,
+        showIconInTooltip: false,
         imageUrl:
-          "https://static.wikia.nocookie.net/pathofexile_gamepedia/images/e/e7/Amplify_passive_skill_icon.png",
+          "https://static.wikia.nocookie.net/pathofexile_gamepedia/images/1/1a/KeystoneAcrobatics_passive_skill_icon.png",
+        nodeData: `
+          Type: Keystone
+          Acrobatics
+          --------
+          30% Chance to Dodge Attack Hits.
+          50% less Armour, 30% less Energy Shield, 30% less Chance to Block Spell and Attack Damage.
+      `,
       });
       window.itemShowcases.test0.applyOptions({
         showLinkAsIcon: true,

@@ -89,7 +89,7 @@ export default {
     }
     & .node-header-left,
     & .node-header-right {
-      width: 98px;
+      width: 68px;
       background-image: url(../../assets/poe/Node-ui-header.png);
     }
   }

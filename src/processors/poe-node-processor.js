@@ -1,7 +1,15 @@
-export default () => {
+import { descriptionToSections } from "./processor-helper-functions";
+
+export default (rawNodeDescription) => {
+  const sections = descriptionToSections(rawNodeDescription);
+
+  const type = sections[0][0].match(/: ([A-z]+)$/)[1];
+  const name = sections[0][1];
+  const description = sections[1];
+
   return {
-    name: "Amplify",
-    type: "Basic",
-    description: ["10% increased Area of Effect", "20% increased Area Damage"],
+    name,
+    type,
+    description,
   };
 };

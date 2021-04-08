@@ -1,6 +1,5 @@
-import processItemDescription, {
-  removeUnknownSections,
-} from "./core-item-processor";
+import processItemDescription from "./core-item-processor";
+import { removeUnknownSections } from "./processor-helper-functions";
 
 export default (rawDescription) => {
   if (!rawDescription) {

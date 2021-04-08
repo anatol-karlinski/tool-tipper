@@ -1,11 +1,10 @@
+import { descriptionToSections } from "./processor-helper-functions";
+
 export default (rawDescription) => {
   if (!rawDescription) {
     throw new Error();
   }
-
-  const descriptionLines = descriptionToLines(rawDescription);
-  let rawSections = splitLinesIntoSections(descriptionLines);
-  rawSections = cleanupRawSections(rawSections);
+  let rawSections = descriptionToSections(rawDescription);
 
   let sections = rawSections.map((lines, index) => ({
     name: getSectionName(lines),
@@ -22,38 +21,6 @@ export default (rawDescription) => {
     rarity: itemRarity,
   };
 };
-
-const descriptionToLines = (rawDescription) =>
-  rawDescription
-    .split("\n")
-    .map((line) => line.replace("\r", ""))
-    .filter((x) => x.length > 0);
-
-const splitLinesIntoSections = (descLines) => {
-  const sections = [];
-  let section = [];
-
-  descLines.forEach((line, index) => {
-    if (line.includes("----")) {
-      sections.push(section);
-      section = [];
-    } else if (index + 1 === descLines.length) {
-      section.push(line);
-      sections.push(section);
-      section = [];
-    } else {
-      section.push(line);
-    }
-  });
-
-  return sections;
-};
-
-export const removeUnknownSections = (sections) =>
-  sections.filter((x) => x.name !== "Unknown");
-
-const cleanupRawSections = (rawSections) =>
-  rawSections.map((s) => s.map((l) => l.trim()).filter((l) => l.length > 0));
 
 const getItemRarity = (sections) => {
   const headerSection = sections.find((x) => x.name === "Header");

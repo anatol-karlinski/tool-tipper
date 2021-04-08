@@ -11,7 +11,8 @@
           <span
             v-show="options.showIconLabel && options.showImage && node.name"
           >
-            {{ node.name }}
+            <div>{{ node.name }}</div>
+            <div class="poe-node-showcase-node-name">{{ node.type }}</div>
           </span>
         </div>
         <a v-else :class="linkClassesComputed">{{ linkTextComputed }}</a>
@@ -79,8 +80,13 @@ export default {
 .poe-node-showcase {
   @include styles.font;
   @include styles.colors;
-}
-.node-link {
-  color: var(--poe-color-node-title);
+
+  .poe-node-showcase-node-name {
+    line-height: 12px;
+    font-size: 12px;
+  }
+  .node-link {
+    color: var(--poe-color-node-title);
+  }
 }
 </style>
