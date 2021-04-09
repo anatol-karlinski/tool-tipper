@@ -10,6 +10,8 @@ export default {
   },
   props: {
     id: { type: String, required: true },
+    wrapperClass: { type: String, default: "" },
+    tooltipWrapperClass: { type: String, default: "" },
   },
   mounted() {
     this.registerShowcase();

@@ -1,30 +1,28 @@
 <template>
-  <div>
-    <div :class="wrapperClasses">
-      <!-- Header -->
-      <div class="node-header">
-        <div class="node-header-left" />
-        <div class="node-header-center">
-          {{ nodeName }}
-        </div>
-        <div class="node-header-right" />
+  <div :class="wrapperClasses">
+    <!-- Header -->
+    <div class="node-header">
+      <div class="node-header-left" />
+      <div class="node-header-center">
+        {{ nodeName }}
       </div>
-      <!-- Description -->
-      <div class="node-description">
-        <div
-          v-for="(descLine, index) in nodeDescription"
-          :key="`${index}-desc-line`"
-        >
-          {{ descLine }}
-        </div>
-      </div>
-      <!-- Icon -->
-      <poe-node-image
-        v-if="showTooltipIcon"
-        :type="nodeType"
-        :imageUrl="this.imageUrl"
-      />
+      <div class="node-header-right" />
     </div>
+    <!-- Description -->
+    <div class="node-description">
+      <div
+        v-for="(descLine, index) in nodeDescription"
+        :key="`${index}-desc-line`"
+      >
+        {{ descLine }}
+      </div>
+    </div>
+    <!-- Icon -->
+    <poe-node-image
+      v-if="showTooltipIcon"
+      :type="nodeType"
+      :iconUrl="this.iconUrl"
+    />
   </div>
 </template>
 
@@ -35,8 +33,8 @@ export default {
   name: "PoeNodeShowcaseTooltip",
   props: {
     node: { type: Object, default: () => {} },
-    imageUrl: { type: String, default: "" },
-    showImage: { type: Boolean, default: false },
+    iconUrl: { type: String, default: "" },
+    showIcon: { type: Boolean, default: false },
   },
   components: {
     PoeNodeImage,
@@ -52,7 +50,7 @@ export default {
       return this.node ? this.node.description : [];
     },
     showTooltipIcon() {
-      return this.imageUrl && this.showImage;
+      return this.iconUrl && this.showIcon;
     },
     wrapperClasses() {
       let classes = `node-showcase-tooltip-wrapper`;
@@ -89,7 +87,7 @@ export default {
     }
     & .node-header-left,
     & .node-header-right {
-      width: 68px;
+      width: 66px;
       background-image: url(../../assets/poe/Node-ui-header.png);
     }
   }

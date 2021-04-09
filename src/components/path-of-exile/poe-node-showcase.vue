@@ -1,39 +1,47 @@
 <template>
-  <div class="poe-node-showcase">
-    <div class="poe-node-showcase-wrapper" v-if="options.displayAsTooltip">
+  <div v-if="showNode" class="poe-node-showcase">
+    <div
+      v-if="options.displayMode === `showcase`"
+      :class="wrapperClassesComputed"
+    >
+      <!-- Showcase -->
+      <poe-node-showcase-tooltip
+        v-if="showNode"
+        :node="node"
+        :iconUrl="options.iconUrl"
+        :showIcon="options.showIconInShowcase"
+      />
+    </div>
+    <div v-else :class="wrapperClassesComputed">
       <v-popover
         trigger="hover"
         placement="auto"
-        :popoverClass="[`poe-node-showcase-popover`]"
+        :popoverClass="popoverClassesComputed"
       >
-        <div v-if="options.showImage">
-          <poe-node-image :type="node.type" :imageUrl="options.imageUrl" />
-          <span
-            v-show="options.showIconLabel && options.showImage && node.name"
-          >
-            <div>{{ node.name }}</div>
-            <div class="poe-node-showcase-node-name">{{ node.type }}</div>
-          </span>
-        </div>
-        <a v-else :class="linkClassesComputed">{{ linkTextComputed }}</a>
-
         <template slot="popover">
           <poe-node-showcase-tooltip
             v-if="showNode"
             :node="node"
-            :imageUrl="options.imageUrl"
-            :showImage="options.showIconInTooltip"
+            :iconUrl="options.iconUrl"
+            :showIcon="options.showIconInShowcase"
           />
         </template>
+        <!-- Icon -->
+        <div v-if="options.displayMode === `icon`">
+          <poe-node-image :type="node.type" :iconUrl="options.iconUrl" />
+          <div class="poe-showcase-label" v-if="!showCustomLabel">
+            <div>{{ node.name }}</div>
+            <div class="poe-node-showcase-node-name">{{ node.type }}</div>
+          </div>
+          <div class="poe-showcase-label" v-else>
+            <div>
+              {{ linkTextComputed }}
+            </div>
+          </div>
+        </div>
+        <!-- Text -->
+        <span v-else class="node-link">{{ linkTextComputed }}</span>
       </v-popover>
-    </div>
-    <div class="poe-node-showcase-wrapper" v-else>
-      <poe-node-showcase-tooltip
-        v-if="showNode"
-        :node="node"
-        :imageUrl="options.imageUrl"
-        :showImage="options.showIconInTooltip"
-      />
     </div>
   </div>
 </template>
@@ -54,20 +62,21 @@ export default {
     },
   },
   computed: {
-    linkClassesComputed() {
-      let classes = `${this.options.linkClasses} node-link`;
-
-      if (this.node && this.node.type) {
-        return classes + ` node-link node-link-${this.node.type.toLowerCase()}`;
-      }
-      return classes;
+    showCustomLabel() {
+      return this.options.labelText.length > 0;
     },
     linkTextComputed() {
-      return this.options.linkText
-        ? this.options.linkText
+      return this.options.labelText
+        ? this.options.labelText
         : this.node
         ? this.node.name
         : "";
+    },
+    wrapperClassesComputed() {
+      return `poe-node-showcase-wrapper ${this.wrapperClass}`;
+    },
+    popoverClassesComputed() {
+      return `poe-node-showcase-popover ${this.tooltipWrapperClass}`;
     },
   },
 };
@@ -76,17 +85,45 @@ export default {
 <style lang="scss">
 @use "./_styles" as styles;
 
+.poe-node-showcase-popover {
+  max-width: 1000px;
+}
+
 .poe-node-showcase-popover,
 .poe-node-showcase {
   @include styles.font;
   @include styles.colors;
-
   .poe-node-showcase-node-name {
     line-height: 12px;
     font-size: 12px;
   }
   .node-link {
     color: var(--poe-color-node-title);
+  }
+}
+.poe-node-showcase-popover {
+  .node-showcase-tooltip-wrapper {
+    background-color: black;
+    box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
+  }
+}
+.poe-showcase-label {
+  padding: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: rgba(1, 1, 1, 0.8);
+  border: 1px solid #303030;
+  border-radius: 5px;
+  justify-content: center;
+  line-height: 18px;
+
+  & div:nth-child(1) {
+    padding-top: 0px;
+    line-height: 20px;
+  }
+
+  & div:nth-child(2) {
+    padding-bottom: 3px;
   }
 }
 </style>

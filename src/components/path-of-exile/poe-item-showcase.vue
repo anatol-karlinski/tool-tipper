@@ -12,9 +12,12 @@
         }}</a>
         <img v-else :width="linkImageSize" :src="options.imageUrl" />
         <br />
-        <span v-show="options.showIconLabel && showImage && item.name">
+        <div
+          class="poe-showcase-label"
+          v-show="options.showIconLabel && showImage && item.name"
+        >
           {{ item.name }}
-        </span>
+        </div>
         <template slot="popover">
           <poe-item-showcase-tooltip
             v-if="showItem"

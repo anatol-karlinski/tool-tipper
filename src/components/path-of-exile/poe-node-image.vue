@@ -1,6 +1,6 @@
 <template>
   <div :class="nodeIconClasses">
-    <img :style="`background-image: url(${this.imageUrl})`" />
+    <img :style="`background-image: url(${this.iconUrl})`" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: "PoeNodeImage",
   props: {
     type: { type: String, required: true },
-    imageUrl: { type: String, required: true },
+    iconUrl: { type: String, required: true },
   },
   computed: {
     nodeIconClasses() {
