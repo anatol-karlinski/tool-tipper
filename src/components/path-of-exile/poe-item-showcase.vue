@@ -1,23 +1,25 @@
 <template>
-  <div class="poe-item-showcase">
-    <div class="poe-item-showcase-wrapper" v-if="options.displayAsTooltip">
+  <div v-if="showItem" class="poe-item-showcase">
+    <div
+      v-if="options.displayMode.toLowerCase() === `showcase`"
+      :class="wrapperClassesComputed"
+    >
+      <!-- Showcase -->
+      <poe-item-showcase-tooltip
+        v-if="showItem"
+        :item="item"
+        :imageUrl="options.imageUrl"
+        :showImage="showTooltipImage"
+        :imageSize="tooltipImageSize"
+      />
+    </div>
+    <div v-else :class="wrapperClassesComputed">
       <v-popover
         trigger="hover"
         placement="auto"
         :offset="20"
-        :popoverClass="[`poe-item-showcase-popover`]"
+        :popoverClass="popoverClassesComputed"
       >
-        <a v-if="!showImage" :class="linkClassesComputed">{{
-          linkTextComputed
-        }}</a>
-        <img v-else :width="linkImageSize" :src="options.imageUrl" />
-        <br />
-        <div
-          class="poe-showcase-label"
-          v-show="options.showIconLabel && showImage && item.name"
-        >
-          {{ item.name }}
-        </div>
         <template slot="popover">
           <poe-item-showcase-tooltip
             v-if="showItem"
@@ -27,16 +29,16 @@
             :imageSize="tooltipImageSize"
           />
         </template>
+        <!-- Icon -->
+        <div v-if="options.displayMode.toLowerCase() === `icon`">
+          <img :width="linkImageSize" :src="options.imageUrl" />
+          <div class="poe-showcase-label">
+            {{ labelTextComputed }}
+          </div>
+        </div>
+        <!-- Text -->
+        <div v-else :class="linkClassesComputed">{{ labelTextComputed }}</div>
       </v-popover>
-    </div>
-    <div class="poe-item-showcase-wrapper" v-else>
-      <poe-item-showcase-tooltip
-        v-if="showItem"
-        :item="item"
-        :imageUrl="options.imageUrl"
-        :showImage="showTooltipImage"
-        :imageSize="tooltipImageSize"
-      />
     </div>
   </div>
 </template>
@@ -84,8 +86,18 @@ export default {
     },
   },
   computed: {
-    linkTextComputed() {
-      return this.options.linkText ? this.options.linkText : this.item.name;
+    wrapperClassesComputed() {
+      return `poe-item-showcase-wrapper ${this.wrapperClass}`;
+    },
+    popoverClassesComputed() {
+      return `poe-item-showcase-popover ${this.tooltipWrapperClass}`;
+    },
+    labelTextComputed() {
+      return this.options.labelText
+        ? this.options.labelText
+        : this.item
+        ? this.item.name
+        : "";
     },
     linkClassesComputed() {
       let classes = `${this.options.linkClasses} item-link`;
@@ -96,17 +108,14 @@ export default {
       }
       return classes;
     },
-    showImage() {
-      return this.options.showLinkAsIcon;
-    },
     showTooltipImage() {
-      return this.options.showIconInTooltip;
+      return this.options.showIconInShowcase;
     },
     linkImageSize() {
-      return this.getImageSize(this.options.iconSize);
+      return this.getImageSize(this.options.imageSize);
     },
     tooltipImageSize() {
-      return this.getImageSize(this.options.iconInTooltipSize);
+      return this.getImageSize(this.options.imageSize);
     },
   },
 };
@@ -114,33 +123,32 @@ export default {
 
 <style lang="scss">
 @use "./_styles" as styles;
-.item-link-unique {
-  color: var(--poe-color-unique);
-}
-.item-link-rare {
-  color: var(--poe-color-rare);
-}
-.item-link-magic {
-  color: var(--poe-color-magic);
-}
-.item-link-normal {
-  color: var(--poe-color-normal);
-}
-.item-link-gem {
-  color: var(--poe-color-gem);
-}
-.poe-item-showcase-wrapper {
-  display: flex;
-}
 .poe-item-showcase-popover {
-  background-color: black;
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
   z-index: 10000;
 }
 .poe-item-showcase,
 .poe-item-showcase-popover {
-  display: inline-block;
   @include styles.font;
   @include styles.colors;
+  display: inline-block;
+  .item-link-unique {
+    color: var(--poe-color-unique);
+  }
+  .item-link-rare {
+    color: var(--poe-color-rare);
+  }
+  .item-link-magic {
+    color: var(--poe-color-magic);
+  }
+  .item-link-normal {
+    color: var(--poe-color-normal);
+  }
+  .item-link-gem {
+    color: var(--poe-color-gem);
+  }
+  .poe-item-showcase-wrapper {
+    display: flex;
+  }
 }
 </style>

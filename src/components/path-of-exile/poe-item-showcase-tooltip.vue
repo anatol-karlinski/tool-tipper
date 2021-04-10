@@ -1,91 +1,89 @@
 <template>
-  <div>
-    <div :class="wrapperClasses">
-      <!-- Header -->
-      <div :class="headerClasses">
-        <div :class="leftHeaderPanelClasses">
-          <img v-if="item.influences.length > 0" />
-        </div>
-        <div class="item-header-center">
-          <div>{{ itemName }}</div>
-          <div v-if="itemHasSubname">{{ itemSubname }}</div>
-        </div>
-        <div :class="rightHeaderPanelClasses">
-          <img v-if="item.influences.length > 0" />
-        </div>
+  <div :class="wrapperClasses">
+    <!-- Header -->
+    <div :class="headerClasses">
+      <div :class="leftHeaderPanelClasses">
+        <img v-if="item.influences.length > 0" />
       </div>
-      <!-- Item stats -->
-      <div class="item-stats">
-        <!-- Properties -->
-        <div
-          v-for="(property, index) in itemProperties"
-          :key="`${index}-property`"
-        >
-          {{ property.key }}<span v-if="property.value">: </span>
-          <span class="item-property-value" v-if="property.value">{{
-            property.value
-          }}</span>
-        </div>
-        <!-- Item level -->
-        <div
-          class="item-separator"
-          v-if="itemHasLevel && itemProperties.length > 0"
-        ></div>
-        <div v-if="itemHasLevel">
-          {{ itemLevel.text }}<span v-if="itemLevel.level">: </span>
-          <span class="item-level-value" v-if="itemLevel.level">{{
-            itemLevel.level
-          }}</span>
-        </div>
-        <!-- Enchants -->
-        <div class="item-separator" v-if="itemHasEnchants"></div>
-        <div
-          v-for="(enchant, index) in itemEnchants"
-          :key="`${index}-enchant`"
-          class="item-enchant"
-        >
-          {{ enchant }}
-        </div>
-        <!-- Implicits -->
-        <div class="item-separator" v-if="itemHasImplicits"></div>
-        <div
-          v-for="(implicit, index) in itemImplicits"
-          :key="`${index}-implicit`"
-          class="item-implicit"
-        >
-          {{ implicit }}
-        </div>
-        <!-- Gem description -->
-        <div class="item-separator" v-if="itemHasGemDescription"></div>
-        <div
-          v-for="(desciptionLine, index) in itemGemDescription"
-          :key="`${index}-gem-desc`"
-          class="gem-description"
-        >
-          {{ desciptionLine }}
-        </div>
-        <!-- Modifiers -->
-        <div class="item-separator" v-if="itemHasModifiers"></div>
-        <div
-          v-for="(modifier, index) in itemModifiers"
-          :key="`${index}-modifier`"
-          :class="getModifierClasses(modifier)"
-        >
-          {{ modifier.text }}
-        </div>
-        <!-- Corruption -->
-        <div class="item-corrupted" v-if="itemIsCorrupted">Corrupted</div>
-        <!-- Mirrored -->
-        <div class="item-mirrored" v-if="itemIsMirrored">Mirrored</div>
-        <!-- Image -->
-        <div class="item-separator" v-if="showTooltipImage"></div>
-        <img
-          class="item-image"
-          :src="imageUrl"
-          v-show="showTooltipImage"
-          :width="imageSize"
-        />
+      <div class="item-header-center">
+        <div>{{ itemName }}</div>
+        <div v-if="itemHasSubname">{{ itemSubname }}</div>
       </div>
+      <div :class="rightHeaderPanelClasses">
+        <img v-if="item.influences.length > 0" />
+      </div>
+    </div>
+    <!-- Item stats -->
+    <div class="item-stats">
+      <!-- Properties -->
+      <div
+        v-for="(property, index) in itemProperties"
+        :key="`${index}-property`"
+      >
+        {{ property.key }}<span v-if="property.value">: </span>
+        <span class="item-property-value" v-if="property.value">{{
+          property.value
+        }}</span>
+      </div>
+      <!-- Item level -->
+      <div
+        class="item-separator"
+        v-if="itemHasLevel && itemProperties.length > 0"
+      ></div>
+      <div v-if="itemHasLevel">
+        {{ itemLevel.text }}<span v-if="itemLevel.level">: </span>
+        <span class="item-level-value" v-if="itemLevel.level">{{
+          itemLevel.level
+        }}</span>
+      </div>
+      <!-- Enchants -->
+      <div class="item-separator" v-if="itemHasEnchants"></div>
+      <div
+        v-for="(enchant, index) in itemEnchants"
+        :key="`${index}-enchant`"
+        class="item-enchant"
+      >
+        {{ enchant }}
+      </div>
+      <!-- Implicits -->
+      <div class="item-separator" v-if="itemHasImplicits"></div>
+      <div
+        v-for="(implicit, index) in itemImplicits"
+        :key="`${index}-implicit`"
+        class="item-implicit"
+      >
+        {{ implicit }}
+      </div>
+      <!-- Gem description -->
+      <div class="item-separator" v-if="itemHasGemDescription"></div>
+      <div
+        v-for="(desciptionLine, index) in itemGemDescription"
+        :key="`${index}-gem-desc`"
+        class="gem-description"
+      >
+        {{ desciptionLine }}
+      </div>
+      <!-- Modifiers -->
+      <div class="item-separator" v-if="itemHasModifiers"></div>
+      <div
+        v-for="(modifier, index) in itemModifiers"
+        :key="`${index}-modifier`"
+        :class="getModifierClasses(modifier)"
+      >
+        {{ modifier.text }}
+      </div>
+      <!-- Corruption -->
+      <div class="item-corrupted" v-if="itemIsCorrupted">Corrupted</div>
+      <!-- Mirrored -->
+      <div class="item-mirrored" v-if="itemIsMirrored">Mirrored</div>
+      <!-- Image -->
+      <div class="item-separator" v-if="showTooltipImage"></div>
+      <img
+        class="item-image"
+        :src="imageUrl"
+        v-show="showTooltipImage"
+        :width="imageSize"
+      />
     </div>
   </div>
 </template>
@@ -252,6 +250,7 @@ export default {
   .item-wrapper {
     min-width: 360px;
     border: 2px solid white;
+    background-color: black;
 
     & .item-image {
       margin-top: 12px;

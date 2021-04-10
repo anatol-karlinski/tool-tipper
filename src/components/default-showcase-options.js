@@ -1,12 +1,8 @@
 export default {
   itemData: "",
+  displayMode: "",
   imageUrl: "",
-  showLinkAsIcon: false,
-  iconSize: "auto",
-  linkClasses: "",
-  linkText: "",
-  displayAsTooltip: false,
-  showIconInTooltip: false,
-  iconInTooltipSize: "auto",
-  showIconLabel: true,
+  labelText: "",
+  imageSize: "auto",
+  showIconInShowcase: false,
 };

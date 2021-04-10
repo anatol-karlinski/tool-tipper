@@ -35,12 +35,12 @@
           </div>
           <div class="poe-showcase-label" v-else>
             <div>
-              {{ linkTextComputed }}
+              {{ labelTextComputed }}
             </div>
           </div>
         </div>
         <!-- Text -->
-        <span v-else class="node-link">{{ linkTextComputed }}</span>
+        <span v-else class="node-link">{{ labelTextComputed }}</span>
       </v-popover>
     </div>
   </div>
@@ -65,7 +65,7 @@ export default {
     showCustomLabel() {
       return this.options.labelText.length > 0;
     },
-    linkTextComputed() {
+    labelTextComputed() {
       return this.options.labelText
         ? this.options.labelText
         : this.node
