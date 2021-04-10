@@ -135,6 +135,7 @@ export default {
 .poe-item-showcase-popover {
   background-color: black;
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
+  z-index: 10000;
 }
 .poe-item-showcase,
 .poe-item-showcase-popover {

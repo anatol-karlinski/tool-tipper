@@ -1,7 +1,7 @@
 <template>
   <div v-if="showNode" class="poe-node-showcase">
     <div
-      v-if="options.displayMode === `showcase`"
+      v-if="options.displayMode.toLowerCase() === `showcase`"
       :class="wrapperClassesComputed"
     >
       <!-- Showcase -->
@@ -27,7 +27,7 @@
           />
         </template>
         <!-- Icon -->
-        <div v-if="options.displayMode === `icon`">
+        <div v-if="options.displayMode.toLowerCase() === `icon`">
           <poe-node-image :type="node.type" :iconUrl="options.iconUrl" />
           <div class="poe-showcase-label" v-if="!showCustomLabel">
             <div>{{ node.name }}</div>
@@ -86,6 +86,7 @@ export default {
 @use "./_styles" as styles;
 
 .poe-node-showcase-popover {
+  z-index: 10000;
   max-width: 1000px;
 }
 
@@ -108,6 +109,7 @@ export default {
   }
 }
 .poe-showcase-label {
+  margin-top: 3px;
   padding: 3px;
   padding-left: 5px;
   padding-right: 5px;
