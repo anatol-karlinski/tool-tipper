@@ -1,11 +1,11 @@
-import defaultOptions from "../default-node-options";
+import defaultOptions from "@/shared/default-options/default-showcase-options";
 
 export default {
   data: function () {
     return {
       options: { ...defaultOptions },
-      node: {},
-      showNode: false,
+      item: {},
+      showItem: false,
     };
   },
   props: {
@@ -24,13 +24,13 @@ export default {
       };
     },
     registerShowcase() {
-      window.nodeShowcases = window.nodeShowcases || {};
-      window.nodeShowcases[this.id] = {
+      window.itemShowcases = window.itemShowcases || {};
+      window.itemShowcases[this.id] = {
         instance: this,
         applyOptions: this.applyOptions,
       };
     },
-    processNodeData() {
+    processItemData() {
       throw new Error();
     },
   },
@@ -39,10 +39,10 @@ export default {
       immediate: false,
       handler: function (options) {
         try {
-          this.node = this.processNodeData(options.nodeData);
-          this.showNode = true;
+          this.item = this.processItemData(options.itemData);
+          this.showItem = true;
         } catch (e) {
-          this.showNode = false;
+          this.showItem = false;
           throw new Error(e);
         }
       },

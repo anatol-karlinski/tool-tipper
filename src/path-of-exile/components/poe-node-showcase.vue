@@ -47,10 +47,10 @@
 </template>
 
 <script>
-import PoeNodeShowcaseTooltip from "./poe-node-showcase-tooltip.vue";
-import PoeNodeImage from "./poe-node-image.vue";
-import nodeShowcaseMixin from "./../shared/node-showcase.mixin";
-import processNodeData from "../../processors/poe-node-processor";
+import PoeNodeShowcaseTooltip from "@/path-of-exile/components/fragments/poe-node-showcase-tooltip.vue";
+import PoeNodeImage from "@/path-of-exile/components/fragments/poe-node-image.vue";
+import nodeShowcaseMixin from "@/shared/mixins/node-showcase.mixin";
+import processNodeData from "@/path-of-exile/data-processors/poe-node-processor";
 
 export default {
   name: "PoeNodeShowcase",
@@ -83,7 +83,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use "./_styles" as styles;
+@use "./../_styles" as styles;
 
 .poe-node-showcase-popover {
   z-index: 10000;

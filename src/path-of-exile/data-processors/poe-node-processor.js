@@ -1,4 +1,4 @@
-import { descriptionToSections } from "./processor-helper-functions";
+import { descriptionToSections } from "@/shared/data-processors/processor-helper-functions";
 
 export default (rawNodeDescription) => {
   const sections = descriptionToSections(rawNodeDescription);

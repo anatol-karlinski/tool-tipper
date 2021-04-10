@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import PoeItemShowcaseTooltip from "./poe-item-showcase-tooltip.vue";
-import processItemData from "../../processors/poe-item-processor";
-import itemShowacseMixin from "./../shared/item-showcase.mixin";
+import PoeItemShowcaseTooltip from "./fragments/poe-item-showcase-tooltip.vue";
+import processItemData from "@/path-of-exile/data-processors/poe-item-processor";
+import itemShowacseMixin from "@/shared/mixins/item-showcase.mixin";
 
 export default {
   name: "PoeItemShowcase",
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use "./_styles" as styles;
+@use "./../_styles" as styles;
 .poe-item-showcase-popover {
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
   z-index: 10000;

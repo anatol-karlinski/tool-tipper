@@ -266,10 +266,10 @@ export default {
 
     &.item-header-single {
       height: 32px;
-      background-image: url(../../assets/poe/Item-ui-header-single.png);
+      background-image: url(../../../assets/poe/Item-ui-header-single.png);
 
       & .item-header-left-panel {
-        background-image: url(../../assets/poe/Item-ui-header-single.png);
+        background-image: url(../../../assets/poe/Item-ui-header-single.png);
         width: 32px;
         &.item-influenced img {
           margin-top: 2px;
@@ -279,7 +279,7 @@ export default {
       }
 
       & .item-header-right-panel {
-        background-image: url(../../assets/poe/Item-ui-header-single.png);
+        background-image: url(../../../assets/poe/Item-ui-header-single.png);
         width: 32px;
         background-position-x: -1px;
 
@@ -304,15 +304,15 @@ export default {
 
     &.item-header-double {
       height: 52px;
-      background-image: url(../../assets/poe/Item-ui-header-double.png);
+      background-image: url(../../../assets/poe/Item-ui-header-double.png);
 
       & .item-header-left-panel {
-        background-image: url(../../assets/poe/Item-ui-header-double.png);
+        background-image: url(../../../assets/poe/Item-ui-header-double.png);
         width: 40px;
       }
 
       & .item-header-right-panel {
-        background-image: url(../../assets/poe/Item-ui-header-double.png);
+        background-image: url(../../../assets/poe/Item-ui-header-double.png);
         width: 40px;
         background-position-x: -8px;
       }
@@ -367,7 +367,7 @@ export default {
     background-position-x: center;
     margin-top: 4px;
     margin-bottom: 4px;
-    background-image: url(../../assets/poe/Item-ui-separators.png);
+    background-image: url(../../../assets/poe/Item-ui-separators.png);
   }
 
   .item-stats {
@@ -471,7 +471,7 @@ export default {
   }
 
   .item-influenced div {
-    background-image: url(../../assets/poe/Influence-icons.png);
+    background-image: url(../../../assets/poe/Influence-icons.png);
     background-repeat: no-repeat;
     background-size: 27px;
     height: 25px;

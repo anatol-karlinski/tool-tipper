@@ -101,8 +101,8 @@
 </template>
 
 <script>
-import PoeItemShowcase from "./components/path-of-exile/poe-item-showcase.vue";
-import PoeNodeShowcase from "./components/path-of-exile/poe-node-showcase.vue";
+import PoeItemShowcase from "@/path-of-exile/components/poe-item-showcase.vue";
+import PoeNodeShowcase from "@/path-of-exile/components/poe-node-showcase.vue";
 
 export default {
   name: "App",

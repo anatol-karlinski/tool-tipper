@@ -77,7 +77,7 @@ export default {
     display: flex;
     font-size: 28px;
     white-space: nowrap;
-    background-image: url(../../assets/poe/Node-ui-header.png);
+    background-image: url(../../../assets/poe/Node-ui-header.png);
     & .node-header-center {
       justify-self: center;
       text-align: center;
@@ -88,7 +88,7 @@ export default {
     & .node-header-left,
     & .node-header-right {
       width: 66px;
-      background-image: url(../../assets/poe/Node-ui-header.png);
+      background-image: url(../../../assets/poe/Node-ui-header.png);
     }
   }
   & .node-icon {
