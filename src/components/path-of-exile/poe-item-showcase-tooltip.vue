@@ -3,14 +3,14 @@
     <!-- Header -->
     <div :class="headerClasses">
       <div :class="leftHeaderPanelClasses">
-        <img v-if="item.influences.length > 0" />
+        <div v-if="item.influences.length > 0" />
       </div>
       <div class="item-header-center">
         <div>{{ itemName }}</div>
         <div v-if="itemHasSubname">{{ itemSubname }}</div>
       </div>
       <div :class="rightHeaderPanelClasses">
-        <img v-if="item.influences.length > 0" />
+        <div v-if="item.influences.length > 0" />
       </div>
     </div>
     <!-- Item stats -->
@@ -470,26 +470,34 @@ export default {
     }
   }
 
-  .item-influenced-elder img {
-    content: url(../../assets/poe/influence-icons/Elder.png);
+  .item-influenced div {
+    background-image: url(../../assets/poe/Influence-icons.png);
+    background-repeat: no-repeat;
+    background-size: 27px;
+    height: 25px;
+    margin-top: 12px;
+    margin-left: 4px;
   }
-  .item-influenced-shaper img {
-    content: url(../../assets/poe/influence-icons/Shaper.png);
+  .item-influenced-crusader div {
+    background-position-y: 0;
   }
-  .item-influenced-hunter img {
-    content: url(../../assets/poe/influence-icons/Hunter.png);
+  .item-influenced-warlord div {
+    background-position-y: -28px;
   }
-  .item-influenced-crusader img {
-    content: url(../../assets/poe/influence-icons/Crusader.png);
+  .item-influenced-hunter div {
+    background-position-y: -56px;
   }
-  .item-influenced-redeemer img {
-    content: url(../../assets/poe/influence-icons/Redeemer.png);
+  .item-influenced-redeemer div {
+    background-position-y: -80px;
   }
-  .item-influenced-warlord img {
-    content: url(../../assets/poe/influence-icons/Warlord.png);
+  .item-influenced-elder div {
+    background-position-y: -108px;
   }
-  .item-influenced-replica img {
-    content: url(../../assets/poe/influence-icons/Replica.png);
+  .item-influenced-shaper div {
+    background-position-y: -135px;
+  }
+  .item-influenced-replica div {
+    background-position-y: -163px;
   }
 }
 </style>
