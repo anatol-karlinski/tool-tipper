@@ -128,37 +128,39 @@ Acrobatics
       itemShowIconInShowcase: false,
       itemImageSize: "auto",
       itemData: `Rarity: Unique
-Replica Eternity Shroud
-Blood Raiment
+Reach of the Council
+Spine Bow
 --------
-Quality: +20% (augmented)
-Evasion Rating: 1042 (augmented)
-Energy Shield: 167 (augmented)
+Bow
+Quality: +30% (augmented)
+Physical Damage: 100-324 (augmented)
+Critical Strike Chance: 6.50%
+Attacks per Second: 1.54 (augmented)
 --------
 Requirements:
 Level: 80
-Dex: 151
+Dex: 212
 Int: 126
 --------
-Sockets: G-B-G-B-B B
+Sockets: B-G-G-G-G-G
 --------
-Item Level: 82
+Item Level: 85
 --------
-Trigger Level 20 Shade Form when Hit
-119% increased Evasion and Energy Shield
-+96 to maximum Life
-+20% to Chaos Resistance
-Gain 5% of Physical Damage as Extra Chaos Damage per Elder Item Equipped
-Hits ignore Enemy Monster Chaos Resistance if all Equipped Items are Elder Items
+Socketed Gems are Supported by Level 20 Greater Volley
+69% increased Physical Damage
+Adds 24 to 85 Physical Damage
+10% increased Attack Speed
+20% reduced Projectile Speed
+Arrows fired from the first firing points always Pierce
+Arrows fired from the second firing points Fork
+Arrows fired from the third firing points Return to you
+Arrows fired from the fourth firing points Chain +2 times
 --------
-"The form of this replica came to me in a troubled dream.
-I do not believe we should ever allow it to be used."
-- Researcher Arn
+We stand together. We strike together.
 --------
-Elder Item
---------
-Has Perfidy Skin. You can reclaim this by shift-clicking this item.`,
-      itemImageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/a/a0/The_Eternity_Shroud_inventory_icon.png`,
+Corrupted
+`,
+      itemImageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/a/a0/Reach_of_the_Council_inventory_icon.png`,
     };
   },
   methods: {

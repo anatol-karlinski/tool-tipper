@@ -27,7 +27,7 @@ export default (rawDescription) => {
     (x) => x.name === "Gem description"
   );
   const itemCorruptionStatus = itemData.sections.some(
-    (x) => x.name === "Corrupted status"
+    (x) => x.name === "Corruption status"
   );
   const itemMirroredStatus = itemData.sections.some(
     (x) => x.name === "Mirrored status"
