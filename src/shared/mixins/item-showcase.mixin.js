@@ -9,7 +9,8 @@ export default {
     };
   },
   props: {
-    id: { type: String, required: true },
+    id: { type: String, default: "" },
+    reference: { type: String, default: "" },
     wrapperClass: { type: String, default: "" },
     tooltipWrapperClass: { type: String, default: "" },
   },
@@ -24,11 +25,45 @@ export default {
       };
     },
     registerShowcase() {
-      window.itemShowcases = window.itemShowcases || {};
-      window.itemShowcases[this.id] = {
+      window.itemShowcases = window.itemShowcases || {
+        items: [],
+        applyOptionsByReference(reference, options) {
+          const items = window.itemShowcases.items[reference];
+          if (!items) {
+            return;
+          }
+
+          items.forEach((item) => {
+            item.applyOptions(options);
+          });
+        },
+        applyOptionsById(itemId, options) {
+          const items = Object.values(window.itemShowcases.items);
+          if (!items) {
+            return;
+          }
+
+          const itemWithId = items.find((x) => x.id === itemId);
+          if (!itemWithId) {
+            return;
+          }
+
+          itemWithId.applyOptions(options);
+        },
+      };
+
+      const itemObject = {
         instance: this,
         applyOptions: this.applyOptions,
+        reference: this.reference,
+        id: this.id,
       };
+
+      if (window.itemShowcases.items[this.reference]) {
+        window.itemShowcases.items[this.reference].push(itemObject);
+      } else {
+        window.itemShowcases.items[this.reference] = [itemObject];
+      }
     },
     processItemData() {
       throw new Error();

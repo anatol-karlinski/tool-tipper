@@ -2,7 +2,7 @@
   <div id="app">
     <div class="poe-node-demo">
       <div class="poe-node-showcase-demo">
-        <poe-node-showcase id="node-demo" />
+        <poe-node-showcase reference="node-demo" />
       </div>
       <div class="poe-node-demo-control-panel">
         <h2>node settings</h2>
@@ -47,7 +47,7 @@
     </div>
     <div class="poe-node-demo">
       <div class="poe-item-showcase-demo">
-        <poe-item-showcase id="item-demo" />
+        <poe-item-showcase reference="item-demo" />
       </div>
       <div class="poe-item-demo-control-panel">
         <h2>item settings</h2>
@@ -168,7 +168,7 @@ Has Assailum Skin. You can reclaim this by shift-clicking this item.`,
   methods: {
     nodeDataUpdate() {
       if (window.nodeShowcases) {
-        window.nodeShowcases["node-demo"].applyOptions({
+        window.nodeShowcases.applyOptionsByReference("node-demo", {
           nodeData: this.nodeData,
           iconUrl: this.nodeIconUrl,
           displayMode: this.nodeDisplayMode,
@@ -179,7 +179,7 @@ Has Assailum Skin. You can reclaim this by shift-clicking this item.`,
     },
     itemDataUpdate() {
       if (window.itemShowcases) {
-        window.itemShowcases["item-demo"].applyOptions({
+        window.itemShowcases.applyOptionsByReference("item-demo", {
           itemData: this.itemData,
           imageUrl: this.itemImageUrl,
           displayMode: this.itemDisplayMode,
