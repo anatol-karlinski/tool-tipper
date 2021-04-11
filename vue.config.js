@@ -8,4 +8,14 @@ module.exports = {
       extensions: [".js", ".vue", ".json"],
     },
   },
+  chainWebpack: (config) => {
+    config.module
+      .rule("images")
+      .use("url-loader")
+      .loader("url-loader")
+      .tap((options) => {
+        options.limit = 1000000;
+        return options;
+      });
+  },
 };
