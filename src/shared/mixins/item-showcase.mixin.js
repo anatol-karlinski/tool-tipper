@@ -43,7 +43,6 @@ export default {
           this.showItem = true;
         } catch (e) {
           this.showItem = false;
-          throw new Error(e);
         }
       },
     },

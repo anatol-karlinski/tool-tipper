@@ -361,6 +361,11 @@ export default {
     color: var(--poe-color-corrupted);
   }
 
+  .item-corrupted,
+  .item-mirrored {
+    margin-top: 6px;
+  }
+
   .item-separator {
     height: 2px;
     background-repeat: no-repeat;

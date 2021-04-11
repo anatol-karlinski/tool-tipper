@@ -43,7 +43,6 @@ export default {
           this.showNode = true;
         } catch (e) {
           this.showNode = false;
-          throw new Error(e);
         }
       },
     },

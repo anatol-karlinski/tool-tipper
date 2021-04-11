@@ -5,6 +5,7 @@
         <poe-node-showcase id="node-demo" />
       </div>
       <div class="poe-node-demo-control-panel">
+        <h2>node settings</h2>
         <p>
           <label><b>Display mode: </b></label>
           <select @change="nodeDataUpdate" v-model="nodeDisplayMode">
@@ -13,6 +14,15 @@
             <option>Text</option>
             <option>Showcase</option>
           </select>
+          <label for="node-icon-checkbox" style="margin-left: 10px"
+            ><b>Show icon in showcase: </b></label
+          >
+          <input
+            id="node-icon-checkbox"
+            @change="nodeDataUpdate"
+            type="checkbox"
+            v-model="nodeShowIconInShowcase"
+          />
         </p>
         <p v-show="nodeDisplayMode != `Showcase`">
           <label><b>Custom label text: </b></label>
@@ -21,14 +31,6 @@
             type="text"
             v-model="nodeCustomLabelText"
             rows="1"
-          />
-        </p>
-        <p>
-          <label><b>Show icon in showcase: </b></label>
-          <input
-            @change="nodeDataUpdate"
-            type="checkbox"
-            v-model="nodeShowIconInShowcase"
           />
         </p>
         <p>
@@ -48,6 +50,7 @@
         <poe-item-showcase id="item-demo" />
       </div>
       <div class="poe-item-demo-control-panel">
+        <h2>item settings</h2>
         <p>
           <label><b>Display mode: </b></label>
           <select @change="itemDataUpdate" v-model="itemDisplayMode">
@@ -55,6 +58,26 @@
             <option>Icon</option>
             <option>Text</option>
             <option>Showcase</option>
+          </select>
+          <label for="item-icon-checkbox" style="margin-left: 10px">
+            <b>Show image in showcase: </b>
+          </label>
+          <input
+            id="item-icon-checkbox"
+            @change="itemDataUpdate"
+            type="checkbox"
+            v-model="itemShowIconInShowcase"
+          />
+          <label style="margin-left: 10px">
+            <b>Image size: </b>
+          </label>
+          <select @change="itemDataUpdate" v-model="itemImageSize">
+            <option disabled value="">Please select one</option>
+            <option>auto</option>
+            <option>sm</option>
+            <option>md</option>
+            <option>lg</option>
+            <option>xlg</option>
           </select>
         </p>
         <p v-show="itemDisplayMode != `Showcase`">
@@ -67,31 +90,12 @@
           />
         </p>
         <p>
-          <label><b>Show icon in showcase: </b></label>
-          <input
-            @change="itemDataUpdate"
-            type="checkbox"
-            v-model="itemShowIconInShowcase"
-          />
-        </p>
-        <p>
-          <label><b>Icon url</b></label>
+          <label><b>Image url</b></label>
           <br />
           <textarea @change="itemDataUpdate" v-model="itemImageUrl" rows="3" />
         </p>
         <p>
-          <label><b>Image size: </b></label>
-          <select @change="itemDataUpdate" v-model="itemImageSize">
-            <option disabled value="">Please select one</option>
-            <option>auto</option>
-            <option>sm</option>
-            <option>md</option>
-            <option>lg</option>
-            <option>xlg</option>
-          </select>
-        </p>
-        <p>
-          <label><b>Node data</b></label>
+          <label><b>Item data</b></label>
           <br />
           <textarea @change="itemDataUpdate" v-model="itemData" rows="10" />
         </p>
@@ -127,40 +131,38 @@ Acrobatics
       itemDisplayMode: "Icon",
       itemShowIconInShowcase: false,
       itemImageSize: "auto",
-      itemData: `Rarity: Unique
-Reach of the Council
-Spine Bow
+      itemData: `Rarity: Rare
+Brood Halo
+Harlequin Mask
 --------
-Bow
-Quality: +30% (augmented)
-Physical Damage: 100-324 (augmented)
-Critical Strike Chance: 6.50%
-Attacks per Second: 1.54 (augmented)
+Quality: +20% (augmented)
+Evasion Rating: 319 (augmented)
+Energy Shield: 63 (augmented)
 --------
 Requirements:
-Level: 80
-Dex: 212
-Int: 126
+Level: 70
+Str: 98
+Dex: 155
+Int: 73
 --------
-Sockets: B-G-G-G-G-G
+Sockets: G-G-R-B
 --------
 Item Level: 85
 --------
-Socketed Gems are Supported by Level 20 Greater Volley
-69% increased Physical Damage
-Adds 24 to 85 Physical Damage
-10% increased Attack Speed
-20% reduced Projectile Speed
-Arrows fired from the first firing points always Pierce
-Arrows fired from the second firing points Fork
-Arrows fired from the third firing points Return to you
-Arrows fired from the fourth firing points Chain +2 times
+Caustic Arrow has 20% chance to inflict Withered on Hit for 2 seconds base Duration (enchant)
 --------
-We stand together. We strike together.
+Grants Level 20 Aspect of the Spider Skill
+83% increased Evasion and Energy Shield
++98 to maximum Life
+Regenerate 26 Life per second
++47% to Lightning Resistance
++1 to Level of Socketed AoE Gems (crafted)
+10% increased Area of Effect (crafted)
 --------
-Corrupted
-`,
-      itemImageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/a/a0/Reach_of_the_Council_inventory_icon.png`,
+Elder Item
+--------
+Has Assailum Skin. You can reclaim this by shift-clicking this item.`,
+      itemImageUrl: `https://static.wikia.nocookie.net/pathofexile_gamepedia/images/5/56/Harlequin_Mask_inventory_icon.png`,
     };
   },
   methods: {
@@ -205,6 +207,15 @@ body {
 #app {
   display: flex;
   flex-direction: row;
+  & input[type="checkbox"],
+  & input[type="radio"] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+  }
+  & textarea {
+    resize: vertical;
+  }
 }
 .poe-node-demo {
   display: flex;
@@ -216,10 +227,19 @@ body {
     margin-left: 25px;
     margin-right: 25px;
     padding: 20px;
-    & label {
+    background-color: #313131;
+    border-radius: 16px;
+    box-shadow: 1px 1px 20px 0px rgb(0 0 0 / 20%);
+
+    & h2 {
+      font-size: 22px !important;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+    & label,
+    & h2 {
       color: white;
       font: 400 13.3333px Arial;
-      font-size: 16px;
     }
     & textarea {
       width: 100%;
